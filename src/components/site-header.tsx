@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
-import logo from "@/assets/caas-logo.asset.json";
+const logoUrl = "/kobby.svg";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -34,7 +34,7 @@ export function SiteHeader() {
     >
       <div className="container-x flex h-20 items-center justify-between">
         <Link to="/" className="flex items-center gap-3 group">
-          <img src={logo.url} alt="CAAS Towing & Recovery" className="h-12 w-12 rounded-md object-cover ring-1 ring-primary/30 transition-transform group-hover:scale-105" />
+          <img src={logoUrl} alt="CAAS Towing & Recovery" className="h-12 w-12 rounded-md object-cover ring-1 ring-primary/30 transition-transform group-hover:scale-105" />
           <div className="hidden sm:block leading-none">
             <div className="font-display text-2xl text-primary tracking-wider">CAAS</div>
             <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Towing & Recovery</div>
