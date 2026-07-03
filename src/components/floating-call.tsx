@@ -1,6 +1,6 @@
 import { MessageCircle } from "lucide-react";
 
-const WHATSAPP_NUMBER = "10000000000"; // TODO: replace with real number
+const WHATSAPP_NUMBER = "0538246745"; // TODO: replace with real number
 const INTRO = "Hello CAAS, I need towing assistance.";
 
 export function FloatingCall() {
