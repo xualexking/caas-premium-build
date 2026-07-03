@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram } from "lucide-react";
-import logo from "@/assets/caas-logo.asset.json";
+const logoUrl = "/kobby.svg";
 
 export function SiteFooter() {
   return (
@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="container-x py-16 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <img src={logo.url} alt="CAAS Towing & Recovery" className="h-14 w-14 rounded-md object-cover" />
+            <img src={logoUrl} alt="CAAS Towing & Recovery" className="h-14 w-14 rounded-md object-cover" />
             <div>
               <div className="font-display text-2xl text-primary tracking-wider">CAAS</div>
               <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Towing & Recovery</div>
@@ -48,7 +48,7 @@ export function SiteFooter() {
         <div>
           <h4 className="font-heading uppercase tracking-wider text-sm mb-4">Contact</h4>
           <ul className="space-y-3 text-sm text-muted-foreground">
-            <li className="flex gap-2"><Phone className="h-4 w-4 text-primary shrink-0 mt-0.5" /><a href="tel:+10000000000" className="hover:text-primary">+1 (000) 000-0000</a></li>
+            <li className="flex gap-2"><Phone className="h-4 w-4 text-primary shrink-0 mt-0.5" /><a href="tel:+233538246745" className="hover:text-primary">+233 53 824 6745</a></li>
             <li className="flex gap-2"><Mail className="h-4 w-4 text-primary shrink-0 mt-0.5" /><a href="mailto:dispatch@caastowing.com" className="hover:text-primary">dispatch@caastowing.com</a></li>
             <li className="flex gap-2"><MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />Service area nationwide</li>
             <li className="flex gap-2"><Clock className="h-4 w-4 text-primary shrink-0 mt-0.5" />Open 24 / 7</li>

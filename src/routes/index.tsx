@@ -82,7 +82,7 @@ function Home() {
               <Link to="/request" className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-4 font-heading uppercase tracking-wider hover:btn-glow transition-all">
                 Request Service <ArrowRight className="h-4 w-4" />
               </Link>
-              <a href="tel:+10000000000" className="inline-flex items-center gap-2 border border-border bg-background/40 backdrop-blur px-6 py-4 font-heading uppercase tracking-wider hover:border-primary hover:text-primary transition-all">
+              <a href="tel:+233538246745" className="inline-flex items-center gap-2 border border-border bg-background/40 backdrop-blur px-6 py-4 font-heading uppercase tracking-wider hover:border-primary hover:text-primary transition-all">
                 <PhoneCall className="h-4 w-4" /> Call Now
               </a>
             </div>
@@ -245,7 +245,7 @@ function Home() {
                 </ul>
               </div>
               <div className="flex flex-col gap-3">
-                <a href="tel:+10000000000" className="text-center bg-primary text-primary-foreground px-6 py-5 font-heading uppercase tracking-widest hover:btn-glow transition-all">
+                <a href="tel:+233538246745" className="text-center bg-primary text-primary-foreground px-6 py-5 font-heading uppercase tracking-widest hover:btn-glow transition-all">
                   <PhoneCall className="inline h-4 w-4 mr-2" /> Call 24/7
                 </a>
                 <Link to="/request" className="text-center border border-border bg-background/60 px-6 py-5 font-heading uppercase tracking-widest hover:border-primary hover:text-primary transition-all">
