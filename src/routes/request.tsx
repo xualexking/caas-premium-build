@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowRight, ArrowLeft, CheckCircle2, MessageCircle, Mail } from "lucide-react";
+import { ArrowRight, ArrowLeft, CheckCircle2, MessageCircle, Mail, Info, Upload, X } from "lucide-react";
 
 export const Route = createFileRoute("/request")({
   head: () => ({
@@ -14,50 +14,108 @@ export const Route = createFileRoute("/request")({
   component: RequestPage,
 });
 
+type Category = "vehicle" | "cargo" | "generic";
+
+const SERVICES: { name: string; category: Category }[] = [
+  { name: "Vehicle Towing", category: "vehicle" },
+  { name: "Vehicle Recovery", category: "vehicle" },
+  { name: "Flood Recovery", category: "vehicle" },
+  { name: "Roadside Assistance", category: "vehicle" },
+  { name: "Heavy Equipment Transport", category: "cargo" },
+  { name: "Container Transport", category: "cargo" },
+  { name: "Generator Hauling", category: "cargo" },
+  { name: "Freight Services", category: "cargo" },
+  { name: "Commercial Fleet Support", category: "generic" },
+];
+
 type Form = {
   name: string; company: string; phone: string; email: string;
-  pickup: string; destination: string; vehicleType: string; equipmentType: string;
+  pickup: string; destination: string;
   service: string; date: string; description: string;
+  // vehicle
+  vehicleMake: string; vehicleModel: string; vehicleYear: string; vehiclePlate: string; vehicleCondition: string;
+  // cargo/heavy
+  cargoType: string; cargoWeight: string; cargoDimensions: string; loadingAvailable: string;
   contactMethod: "email" | "whatsapp"; contactValue: string;
+  agreed: boolean;
 };
 
 const empty: Form = {
   name: "", company: "", phone: "", email: "",
-  pickup: "", destination: "", vehicleType: "", equipmentType: "",
+  pickup: "", destination: "",
   service: "", date: "", description: "",
+  vehicleMake: "", vehicleModel: "", vehicleYear: "", vehiclePlate: "", vehicleCondition: "",
+  cargoType: "", cargoWeight: "", cargoDimensions: "", loadingAvailable: "",
   contactMethod: "email", contactValue: "",
+  agreed: false,
 };
 
 const WHATSAPP_NUMBER = "10000000000"; // TODO: replace with real number
 
+function categoryOf(service: string): Category {
+  return SERVICES.find((s) => s.name === service)?.category ?? "generic";
+}
+
 function RequestPage() {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>(empty);
+  const [photos, setPhotos] = useState<File[]>([]);
   const [submitted, setSubmitted] = useState(false);
 
   const set = <K extends keyof Form>(k: K, v: Form[K]) => setForm((f) => ({ ...f, [k]: v }));
 
   const steps = ["Contact", "Job Details", "Preferences"];
+  const cat = categoryOf(form.service);
 
   const canNext =
     (step === 0 && form.name && form.phone) ||
     (step === 1 && form.service && form.pickup) ||
     step === 2;
 
+  const canSubmit = step === 2 && form.agreed && form.contactValue;
+
+  const onPhotos = (files: FileList | null) => {
+    if (!files) return;
+    const next = [...photos, ...Array.from(files)].slice(0, 6);
+    setPhotos(next);
+  };
+
   const submit = () => {
-    const summary = `New Service Request — CAAS Towing
-Name: ${form.name}
-Company: ${form.company || "-"}
-Phone: ${form.phone}
-Email: ${form.email || "-"}
-Service: ${form.service}
-Pickup: ${form.pickup}
-Destination: ${form.destination || "-"}
-Vehicle: ${form.vehicleType || "-"}
-Equipment: ${form.equipmentType || "-"}
-Preferred date: ${form.date || "ASAP"}
-Description: ${form.description || "-"}
-Preferred contact: ${form.contactMethod} (${form.contactValue || "-"})`;
+    const details: string[] = [
+      `New Service Request — CAAS Towing`,
+      `Name: ${form.name}`,
+      `Company: ${form.company || "-"}`,
+      `Phone: ${form.phone}`,
+      `Email: ${form.email || "-"}`,
+      `Service: ${form.service}`,
+      `Pickup: ${form.pickup}`,
+      `Destination: ${form.destination || "-"}`,
+      `Preferred date: ${form.date || "ASAP"}`,
+    ];
+    if (cat === "vehicle") {
+      details.push(
+        `Vehicle Make: ${form.vehicleMake || "-"}`,
+        `Vehicle Model: ${form.vehicleModel || "-"}`,
+        `Year: ${form.vehicleYear || "-"}`,
+        `Plate: ${form.vehiclePlate || "-"}`,
+        `Condition: ${form.vehicleCondition || "-"}`,
+      );
+    } else if (cat === "cargo") {
+      details.push(
+        `Cargo/Equipment: ${form.cargoType || "-"}`,
+        `Weight: ${form.cargoWeight || "-"}`,
+        `Dimensions: ${form.cargoDimensions || "-"}`,
+        `Loading available at site: ${form.loadingAvailable || "-"}`,
+      );
+    }
+    details.push(
+      `Description: ${form.description || "-"}`,
+      `Photos attached: ${photos.length}`,
+      `Preferred contact: ${form.contactMethod} (${form.contactValue || "-"})`,
+      ``,
+      `Agreed to CAAS Dispatch Policy: yes (GH₵200 booking fee)`,
+    );
+    const summary = details.join("\n");
 
     if (form.contactMethod === "whatsapp") {
       const msg = encodeURIComponent(summary);
@@ -79,12 +137,12 @@ Preferred contact: ${form.contactMethod} (${form.contactValue || "-"})`;
           </div>
           <h1 className="font-display text-5xl md:text-6xl">Request Sent.</h1>
           <p className="mt-4 text-muted-foreground text-lg">
-            A CAAS dispatcher will be in touch shortly via {form.contactMethod === "whatsapp" ? "WhatsApp" : "email"}.
+            A CAAS dispatcher will be in touch shortly via {form.contactMethod === "whatsapp" ? "WhatsApp" : "email"} with payment instructions for the GH₵200 booking fee.
             For emergencies, call our 24/7 line.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a href="tel:+10000000000" className="bg-primary text-primary-foreground px-6 py-3 font-heading uppercase tracking-wider">Call Now</a>
-            <button onClick={() => { setForm(empty); setStep(0); setSubmitted(false); }} className="border border-border px-6 py-3 font-heading uppercase tracking-wider hover:border-primary">New Request</button>
+            <button onClick={() => { setForm(empty); setPhotos([]); setStep(0); setSubmitted(false); }} className="border border-border px-6 py-3 font-heading uppercase tracking-wider hover:border-primary">New Request</button>
           </div>
         </div>
       </section>
@@ -128,22 +186,110 @@ Preferred contact: ${form.contactMethod} (${form.contactValue || "-"})`;
               <Field label="Service Needed *">
                 <select value={form.service} onChange={(e) => set("service", e.target.value)} className={input}>
                   <option value="">Select service…</option>
-                  {["Vehicle Towing","Vehicle Recovery","Flood Recovery","Roadside Assistance","Heavy Equipment Transport","Container Transport","Generator Hauling","Freight Services","Commercial Fleet Support"].map(o => <option key={o}>{o}</option>)}
+                  {SERVICES.map((o) => <option key={o.name}>{o.name}</option>)}
                 </select>
               </Field>
               <Field label="Preferred Date"><input type="date" value={form.date} onChange={(e) => set("date", e.target.value)} className={input} /></Field>
               <Field label="Pickup Location *"><input required value={form.pickup} onChange={(e) => set("pickup", e.target.value)} className={input} /></Field>
               <Field label="Destination"><input value={form.destination} onChange={(e) => set("destination", e.target.value)} className={input} /></Field>
-              <Field label="Vehicle Type"><input placeholder="e.g. Ford F-150" value={form.vehicleType} onChange={(e) => set("vehicleType", e.target.value)} className={input} /></Field>
-              <Field label="Equipment Type"><input placeholder="e.g. 20ft container" value={form.equipmentType} onChange={(e) => set("equipmentType", e.target.value)} className={input} /></Field>
+
+              {/* Dynamic fields */}
+              {cat === "vehicle" && (
+                <>
+                  <div className="sm:col-span-2 -mb-1 mt-2 text-xs uppercase tracking-[0.25em] text-primary">Vehicle Details</div>
+                  <Field label="Make"><input placeholder="e.g. Toyota" value={form.vehicleMake} onChange={(e) => set("vehicleMake", e.target.value)} className={input} /></Field>
+                  <Field label="Model"><input placeholder="e.g. Hilux" value={form.vehicleModel} onChange={(e) => set("vehicleModel", e.target.value)} className={input} /></Field>
+                  <Field label="Year"><input placeholder="e.g. 2018" value={form.vehicleYear} onChange={(e) => set("vehicleYear", e.target.value)} className={input} /></Field>
+                  <Field label="License Plate"><input value={form.vehiclePlate} onChange={(e) => set("vehiclePlate", e.target.value)} className={input} /></Field>
+                  <div className="sm:col-span-2">
+                    <Field label="Vehicle Condition">
+                      <select value={form.vehicleCondition} onChange={(e) => set("vehicleCondition", e.target.value)} className={input}>
+                        <option value="">Select condition…</option>
+                        {["Runs & drives","Won't start","Flat tire","Accident damage","Rolled over","Submerged / flooded","In a ditch"].map((o) => <option key={o}>{o}</option>)}
+                      </select>
+                    </Field>
+                  </div>
+                </>
+              )}
+
+              {cat === "cargo" && (
+                <>
+                  <div className="sm:col-span-2 -mb-1 mt-2 text-xs uppercase tracking-[0.25em] text-primary">Cargo / Equipment Details</div>
+                  <Field label="Type"><input placeholder="e.g. 40ft container, excavator, generator" value={form.cargoType} onChange={(e) => set("cargoType", e.target.value)} className={input} /></Field>
+                  <Field label="Approx. Weight"><input placeholder="e.g. 12 tons" value={form.cargoWeight} onChange={(e) => set("cargoWeight", e.target.value)} className={input} /></Field>
+                  <Field label="Dimensions (L × W × H)"><input placeholder="e.g. 40 × 8 × 8 ft" value={form.cargoDimensions} onChange={(e) => set("cargoDimensions", e.target.value)} className={input} /></Field>
+                  <Field label="Loading Equipment On Site?">
+                    <select value={form.loadingAvailable} onChange={(e) => set("loadingAvailable", e.target.value)} className={input}>
+                      <option value="">Select…</option>
+                      {["Yes — crane/forklift available","No — CAAS must provide","Not sure"].map((o) => <option key={o}>{o}</option>)}
+                    </select>
+                  </Field>
+                </>
+              )}
+
               <div className="sm:col-span-2">
-                <Field label="Description"><textarea rows={4} value={form.description} onChange={(e) => set("description", e.target.value)} className={input} /></Field>
+                <Field label="Description">
+                  <textarea rows={4} value={form.description} onChange={(e) => set("description", e.target.value)} className={input} placeholder="Any extra details we should know…" />
+                </Field>
+              </div>
+
+              {/* Photo upload */}
+              <div className="sm:col-span-2">
+                <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Upload Photos of the Unit (optional, up to 6)</div>
+                <label className="flex items-center justify-center gap-2 border border-dashed border-border hover:border-primary bg-background px-4 py-6 cursor-pointer transition-colors">
+                  <Upload className="h-5 w-5 text-primary" />
+                  <span className="text-sm text-muted-foreground">Click to add photos</span>
+                  <input type="file" accept="image/*" multiple className="hidden" onChange={(e) => onPhotos(e.target.files)} />
+                </label>
+                {photos.length > 0 && (
+                  <div className="mt-3 grid grid-cols-3 sm:grid-cols-6 gap-2">
+                    {photos.map((f, i) => (
+                      <div key={i} className="relative group aspect-square border border-border overflow-hidden bg-background">
+                        <img src={URL.createObjectURL(f)} alt={f.name} className="h-full w-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => setPhotos((p) => p.filter((_, j) => j !== i))}
+                          className="absolute top-1 right-1 h-6 w-6 bg-background/80 backdrop-blur border border-border grid place-content-center opacity-0 group-hover:opacity-100 transition-opacity"
+                          aria-label="Remove photo"
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <p className="mt-2 text-[11px] text-muted-foreground">Photos will be attached to your message when submitting via email. For WhatsApp, please send photos directly in the chat.</p>
               </div>
             </div>
           )}
 
           {step === 2 && (
-            <div className="space-y-5">
+            <div className="space-y-6">
+              {/* Dispatch Policy */}
+              <div className="border border-primary/40 bg-primary/5 p-5">
+                <div className="flex items-start gap-3">
+                  <Info className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-heading uppercase tracking-wider text-sm text-primary">CAAS Dispatch Policy</div>
+                    <p className="mt-2 text-sm text-foreground/90 leading-relaxed">
+                      A <strong>GH₵200 booking fee</strong> is required before dispatch. Once the driver arrives and the vehicle/unit is available for pickup, the fee is <strong>refunded or deducted from the final cost</strong>. If cancelled after dispatch, the fee becomes <strong>non-refundable</strong>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <label className="flex items-start gap-3 cursor-pointer border border-border p-4 hover:border-primary transition-colors">
+                <input
+                  type="checkbox"
+                  checked={form.agreed}
+                  onChange={(e) => set("agreed", e.target.checked)}
+                  className="mt-1 h-4 w-4 accent-primary cursor-pointer"
+                />
+                <span className="text-sm text-foreground">
+                  I understand and agree to CAAS dispatch policy.
+                </span>
+              </label>
+
               <div className="text-sm uppercase tracking-wider text-muted-foreground">Preferred Contact Method</div>
               <div className="grid sm:grid-cols-2 gap-3">
                 <label className={`cursor-pointer border p-5 flex items-start gap-3 ${form.contactMethod === "email" ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`}>
@@ -161,12 +307,12 @@ Preferred contact: ${form.contactMethod} (${form.contactValue || "-"})`;
                   </div>
                 </label>
               </div>
-              <Field label={form.contactMethod === "email" ? "Your Email" : "Your WhatsApp Number"}>
+              <Field label={form.contactMethod === "email" ? "Your Email *" : "Your WhatsApp Number *"}>
                 <input
                   type={form.contactMethod === "email" ? "email" : "tel"}
                   value={form.contactValue}
                   onChange={(e) => set("contactValue", e.target.value)}
-                  placeholder={form.contactMethod === "email" ? "you@example.com" : "+1 555 555 5555"}
+                  placeholder={form.contactMethod === "email" ? "you@example.com" : "+233 55 555 5555"}
                   className={input}
                 />
               </Field>
@@ -195,7 +341,8 @@ Preferred contact: ${form.contactMethod} (${form.contactValue || "-"})`;
               <button
                 type="button"
                 onClick={submit}
-                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 font-heading uppercase tracking-wider text-sm hover:btn-glow transition-all"
+                disabled={!canSubmit}
+                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 font-heading uppercase tracking-wider text-sm disabled:opacity-40 hover:btn-glow transition-all"
               >
                 Submit Request <ArrowRight className="h-4 w-4" />
               </button>

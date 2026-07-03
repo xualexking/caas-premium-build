@@ -71,9 +71,9 @@ function Home() {
               24 / 7 Emergency Dispatch
             </div>
             <h1 className="font-display text-5xl sm:text-7xl lg:text-8xl leading-[0.9] text-foreground animate-fade-in">
-              Fast. Reliable.<br />
-              <span className="text-primary">Heavy Duty</span> Towing<br />
-              &amp; Recovery.
+              From Cars<br />
+              To <span className="text-primary">Cargo</span> —<br />
+              We Move It All.
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-xl animate-fade-in">
               24/7 emergency towing, heavy equipment transport, flood recovery, and commercial fleet support. When the road turns rough, CAAS rolls out.

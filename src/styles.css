@@ -49,7 +49,7 @@
   --popover: oklch(0.18 0.006 90);
   --popover-foreground: oklch(0.98 0.005 90);
 
-  --primary: oklch(0.85 0.17 95);          /* signal yellow ~#F5C400 */
+  --primary: oklch(0.80 0.18 88);          /* deep yellow ~#E6B800 */
   --primary-foreground: oklch(0.14 0.005 90);
 
   --secondary: oklch(0.24 0.007 90);
@@ -58,7 +58,7 @@
   --muted: oklch(0.22 0.007 90);
   --muted-foreground: oklch(0.72 0.01 90);
 
-  --accent: oklch(0.85 0.17 95);
+  --accent: oklch(0.80 0.18 88);
   --accent-foreground: oklch(0.14 0.005 90);
 
   --destructive: oklch(0.62 0.24 27);
@@ -66,11 +66,11 @@
 
   --border: oklch(0.28 0.008 90);
   --input: oklch(0.28 0.008 90);
-  --ring: oklch(0.85 0.17 95);
+  --ring: oklch(0.80 0.18 88);
 
-  --gradient-primary: linear-gradient(135deg, oklch(0.88 0.18 95), oklch(0.78 0.17 80));
+  --gradient-primary: linear-gradient(135deg, oklch(0.82 0.18 88), oklch(0.72 0.17 80));
   --gradient-dark: linear-gradient(180deg, oklch(0.14 0.005 90) 0%, oklch(0.10 0.005 90) 100%);
-  --shadow-glow: 0 20px 60px -20px oklch(0.85 0.17 95 / 0.45);
+  --shadow-glow: 0 20px 60px -20px oklch(0.80 0.18 88 / 0.45);
   --shadow-hard: 0 12px 40px -8px oklch(0 0 0 / 0.6);
 }
 
@@ -133,8 +133,8 @@
 }
 
 @keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 oklch(0.85 0.17 95 / 0.5); }
-  100% { box-shadow: 0 0 0 20px oklch(0.85 0.17 95 / 0); }
+  0% { box-shadow: 0 0 0 0 oklch(0.65 0.18 150 / 0.5); }
+  100% { box-shadow: 0 0 0 20px oklch(0.65 0.18 150 / 0); }
 }
 @utility pulse-ring {
   animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
