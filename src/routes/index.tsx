@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Truck, Wrench, Waves, BatteryCharging, Container, Zap, Package, Building2, ShieldCheck,
   Clock, Users, Gauge, DollarSign, ArrowRight, PhoneCall, Star, CheckCircle2, Anchor,
@@ -10,8 +11,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 
 export const Route = createFileRoute("/")({
@@ -162,7 +161,7 @@ function Home() {
           </div>
 
           <div className="mt-12">
-            <Carousel opts={{ loop: true, align: "start" }} className="w-full">
+            <Carousel plugins={[Autoplay({ delay: 4000, stopOnInteraction: false })]} opts={{ loop: true, align: "start" }} className="w-full">
               <CarouselContent className="-ml-4">
                 {gallerySlides.map((g) => (
                   <CarouselItem key={g.label} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
@@ -178,8 +177,6 @@ function Home() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="hidden sm:flex" />
-              <CarouselNext className="hidden sm:flex" />
             </Carousel>
           </div>
         </div>
@@ -250,7 +247,7 @@ function Home() {
             </div>
           </div>
 
-          <Carousel opts={{ loop: true, align: "start" }} className="w-full">
+          <Carousel plugins={[Autoplay({ delay: 4000, stopOnInteraction: false })]} opts={{ loop: true, align: "start" }} className="w-full">
             <CarouselContent className="-ml-4">
               {industries.map((ind) => (
                 <CarouselItem key={ind.title} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
@@ -264,8 +261,6 @@ function Home() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden sm:flex" />
-            <CarouselNext className="hidden sm:flex" />
           </Carousel>
         </div>
       </section>
