@@ -1,9 +1,25 @@
-import { createFileRoute, Outlet, Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
-import { checkAdminSession, adminLogoutFn } from "@/lib/reviews";
+import {
+  createFileRoute,
+  Outlet,
+  Link,
+  useNavigate,
+  useRouterState,
+  redirect,
+} from "@tanstack/react-router";
+import { useState } from "react";
+import { adminLogoutFn, checkAdminSession } from "@/lib/reviews";
 import { LayoutDashboard, Star, LogOut, Menu, X, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/garage-dispatch")({
+  // Check session on the server before rendering — eliminates the client spinner
+  beforeLoad: async ({ location }) => {
+    // Login page never needs an auth check
+    if (location.pathname === "/garage-dispatch/login") return;
+    const { authenticated } = await checkAdminSession();
+    if (!authenticated) {
+      throw redirect({ to: "/garage-dispatch/login" });
+    }
+  },
   component: AdminLayout,
 });
 
@@ -14,34 +30,14 @@ const nav = [
 ];
 
 function AdminLayout() {
-  const [authed, setAuthed] = useState<boolean | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
   const { location } = useRouterState();
 
-  useEffect(() => {
-    checkAdminSession().then((res) => {
-      setAuthed(res.authenticated);
-      if (!res.authenticated) {
-        navigate({ to: "/garage-dispatch/login" });
-      }
-    });
-  }, [location.pathname]);
-
-  // Login page renders without the shell
+  // Login page skips the shell entirely
   if (location.pathname === "/garage-dispatch/login") {
     return <Outlet />;
   }
-
-  if (authed === null) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <div className="h-8 w-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  if (!authed) return null;
 
   const handleLogout = async () => {
     await adminLogoutFn();
@@ -122,7 +118,7 @@ function AdminLayout() {
             <LayoutDashboard className="h-4 w-4" />
             <span className="font-heading uppercase tracking-wider text-xs">Admin Dashboard</span>
           </div>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto">
             <Link
               to="/"
               className="text-xs text-muted-foreground hover:text-primary transition-colors font-heading uppercase tracking-wider"

@@ -1,9 +1,16 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, redirect } from "@tanstack/react-router";
 import { useState } from "react";
-import { adminLoginFn } from "@/lib/reviews";
+import { adminLoginFn, checkAdminSession } from "@/lib/reviews";
 import { Eye, EyeOff, Lock, User } from "lucide-react";
 
 export const Route = createFileRoute("/garage-dispatch/login")({
+  // If already logged in, skip the login page entirely
+  beforeLoad: async () => {
+    const { authenticated } = await checkAdminSession();
+    if (authenticated) {
+      throw redirect({ to: "/garage-dispatch/reviews" });
+    }
+  },
   component: AdminLogin,
 });
 
