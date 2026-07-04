@@ -27,8 +27,8 @@ function Contact() {
       <section className="py-16">
         <div className="container-x grid lg:grid-cols-2 gap-8">
           <div className="grid sm:grid-cols-2 gap-4">
-            <ContactCard icon={Phone} label="Phone" value="+233 53 824 6745" href="tel:+233538246745" primary />
-            <ContactCard icon={MessageCircle} label="WhatsApp" value="Chat with dispatch" href="https://wa.me/233538246745" />
+            <ContactCard icon={Phone} label="Phone" value="+233 24 677 3279" href="tel:+233246773279" primary />
+            <ContactCard icon={MessageCircle} label="WhatsApp" value="Chat with dispatch" href="https://wa.me/233246773279" />
             <ContactCard icon={Mail} label="Email" value="dispatch@caastowing.com" href="mailto:dispatch@caastowing.com" />
             <ContactCard icon={Clock} label="Hours" value="Open 24 / 7" />
             <div className="sm:col-span-2 border border-border bg-surface p-6">

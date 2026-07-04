@@ -48,7 +48,7 @@ export function SiteFooter() {
         <div>
           <h4 className="font-heading uppercase tracking-wider text-sm mb-4">Contact</h4>
           <ul className="space-y-3 text-sm text-muted-foreground">
-            <li className="flex gap-2"><Phone className="h-4 w-4 text-primary shrink-0 mt-0.5" /><a href="tel:+233538246745" className="hover:text-primary">+233 53 824 6745</a></li>
+            <li className="flex gap-2"><Phone className="h-4 w-4 text-primary shrink-0 mt-0.5" /><a href="tel:+233246773279" className="hover:text-primary">+233 24 677 3279</a></li>
             <li className="flex gap-2"><Mail className="h-4 w-4 text-primary shrink-0 mt-0.5" /><a href="mailto:dispatch@caastowing.com" className="hover:text-primary">dispatch@caastowing.com</a></li>
             <li className="flex gap-2"><MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />Service area nationwide</li>
             <li className="flex gap-2"><Clock className="h-4 w-4 text-primary shrink-0 mt-0.5" />Open 24 / 7</li>

@@ -61,7 +61,7 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <a
-            href="tel:+233538246745"
+            href="tel:+233246773279"
             className="hidden md:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-foreground/90 hover:text-primary transition-colors"
           >
             <Phone className="h-4 w-4" /> Call 24/7
