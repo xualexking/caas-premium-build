@@ -161,7 +161,7 @@ function Home() {
           </div>
 
           <div className="mt-12">
-            <Carousel opts={{ loop: true, align: "start" }} className="w-full">
+            <Carousel plugins={[Autoplay({ delay: 4000, stopOnInteraction: false })]} opts={{ loop: true, align: "start" }} className="w-full">
               <CarouselContent className="-ml-4">
                 {gallerySlides.map((g) => (
                   <CarouselItem key={g.label} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
