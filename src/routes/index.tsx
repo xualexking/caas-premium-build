@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Truck, Wrench, Waves, BatteryCharging, Container, Zap, Package, Building2, ShieldCheck,
   Clock, Users, Gauge, DollarSign, ArrowRight, PhoneCall, Star, CheckCircle2, Anchor,
@@ -10,8 +11,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 
 export const Route = createFileRoute("/")({
