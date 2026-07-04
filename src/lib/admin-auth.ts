@@ -1,12 +1,10 @@
 "use server";
 
 import { getCookie, setCookie, deleteCookie } from "@tanstack/start-server-core";
+import { sql, ensureSchema } from "./db";
 
 const SESSION_COOKIE = "caas_sess";
 const SESSION_TTL_MS = 8 * 60 * 60 * 1000; // 8 hours
-
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME ?? "";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "";
 const SESSION_SECRET = process.env.SESSION_SECRET ?? "fallback-secret-change-me";
 
 // ----- Crypto helpers --------------------------------------------------------
@@ -26,7 +24,7 @@ async function hmac(message: string): Promise<string> {
     .join("");
 }
 
-async function hashPassword(password: string): Promise<string> {
+export async function hashPassword(password: string): Promise<string> {
   const enc = new TextEncoder();
   const buf = await crypto.subtle.digest(
     "SHA-256",
@@ -39,8 +37,8 @@ async function hashPassword(password: string): Promise<string> {
 
 // ----- Session token ---------------------------------------------------------
 
-async function makeToken(): Promise<string> {
-  const payload = `admin:${Date.now()}`;
+async function makeToken(username: string): Promise<string> {
+  const payload = `admin:${username}:${Date.now()}`;
   const sig = await hmac(payload);
   return btoa(`${payload}:${sig}`);
 }
@@ -52,8 +50,9 @@ async function verifyToken(token: string): Promise<boolean> {
     const sig = decoded.slice(lastColon + 1);
     const payload = decoded.slice(0, lastColon);
     const parts = payload.split(":");
-    if (parts.length !== 2 || parts[0] !== "admin") return false;
-    const age = Date.now() - parseInt(parts[1], 10);
+    // payload is "admin:<username>:<timestamp>"
+    if (parts.length !== 3 || parts[0] !== "admin") return false;
+    const age = Date.now() - parseInt(parts[2], 10);
     if (age > SESSION_TTL_MS) return false;
     const expected = await hmac(payload);
     return sig === expected;
@@ -68,19 +67,30 @@ export async function adminLogin(
   username: string,
   password: string,
 ): Promise<{ ok: boolean; error?: string }> {
-  if (username !== ADMIN_USERNAME) {
+  await ensureSchema();
+
+  const rows = await sql<{ id: number; password_hash: string }[]>`
+    SELECT id, password_hash FROM admin_users
+    WHERE username = ${username}
+    LIMIT 1
+  `;
+
+  if (rows.length === 0) {
     return { ok: false, error: "Invalid credentials" };
   }
 
   const hashed = await hashPassword(password);
-  const storedHash = process.env.ADMIN_PASSWORD_HASH ?? "";
-  const passwordOk = password === ADMIN_PASSWORD || hashed === storedHash;
 
-  if (!passwordOk) {
+  if (hashed !== rows[0].password_hash) {
     return { ok: false, error: "Invalid credentials" };
   }
 
-  const token = await makeToken();
+  // Update last_login
+  await sql`
+    UPDATE admin_users SET last_login = NOW() WHERE id = ${rows[0].id}
+  `;
+
+  const token = await makeToken(username);
 
   setCookie(SESSION_COOKIE, token, {
     httpOnly: true,
