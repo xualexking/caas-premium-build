@@ -1,18 +1,26 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Truck, Wrench, Waves, BatteryCharging, Container, Zap, Package, Building2, ShieldCheck,
-  Clock, Users, Gauge, DollarSign, ArrowRight, PhoneCall, Star, CheckCircle2,
+  Clock, Users, Gauge, DollarSign, ArrowRight, PhoneCall, Star, CheckCircle2, Anchor,
+  Car, Shield, Boxes, Factory, Warehouse, HardHat, Hammer, Plug, Store, Ship, Building, Hotel, Cog,
 } from "lucide-react";
 import hero from "@/assets/hero-truck.jpg";
 import logo from "@/assets/caas-logo.asset.json";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "CAAS Towing & Recovery — 24/7 Heavy Duty Towing & Transport" },
-      { name: "description", content: "24/7 emergency towing, heavy equipment transport, vehicle recovery, and commercial fleet support. Fast dispatch. Trusted by drivers and fleets." },
+      { name: "description", content: "24/7 emergency towing, heavy equipment transport, vehicle recovery, and commercial fleet support across Ghana. Fast dispatch. Trusted by drivers and fleets." },
       { property: "og:title", content: "CAAS Towing & Recovery — 24/7 Heavy Duty Towing" },
-      { property: "og:description", content: "Fast, reliable, professional towing and heavy recovery." },
+      { property: "og:description", content: "From cars to cargo — we move it all. Trusted across Ghana." },
     ],
   }),
   component: Home,
@@ -20,23 +28,15 @@ export const Route = createFileRoute("/")({
 
 const services = [
   { icon: Truck, title: "Vehicle Towing", desc: "Light-duty to heavy-duty towing for cars, SUVs, trucks, and vans." },
+  { icon: Container, title: "Heavy Equipment Transport", desc: "Excavators, loaders, and construction machinery hauling." },
+  { icon: Package, title: "Container Hauling", desc: "20ft and 40ft container pickup, delivery, and repositioning." },
+  { icon: Zap, title: "Generator Hauling", desc: "Safe transport of industrial generators of any size." },
+  { icon: Truck, title: "Freight Services", desc: "Reliable freight movement for time-critical shipments." },
   { icon: Wrench, title: "Vehicle Recovery", desc: "Off-road, ditch, and rollover recovery with specialized equipment." },
   { icon: Waves, title: "Flood Recovery", desc: "Rapid response to water-logged vehicles and equipment." },
   { icon: BatteryCharging, title: "Roadside Assistance", desc: "Jump-starts, tire changes, lockouts and fuel delivery." },
-  { icon: Container, title: "Heavy Equipment Transport", desc: "Excavators, loaders, and construction machinery hauling." },
-  { icon: Package, title: "Container Transport", desc: "20ft and 40ft container pickup, delivery, and repositioning." },
-  { icon: Zap, title: "Generator Hauling", desc: "Safe transport of industrial generators of any size." },
-  { icon: Truck, title: "Freight Services", desc: "Reliable freight movement for time-critical shipments." },
   { icon: Building2, title: "Commercial Fleet Support", desc: "Priority dispatch and dedicated accounts for fleet operators." },
-];
-
-const perks = [
-  { icon: Clock, title: "24 / 7 Response", desc: "Around the clock. Every day of the year." },
-  { icon: Users, title: "Professional Drivers", desc: "Certified, insured, and highly experienced." },
-  { icon: ShieldCheck, title: "Heavy Duty Equipment", desc: "Modern, well-maintained fleet built for the job." },
-  { icon: Gauge, title: "Fast Dispatch", desc: "Rapid ETAs, GPS-tracked vehicles." },
-  { icon: DollarSign, title: "Fair Pricing", desc: "Transparent quotes, no surprises." },
-  { icon: Building2, title: "Commercial Experts", desc: "Trusted by fleets, contractors, and logistics teams." },
+  { icon: Anchor, title: "Winch-Out & Off-Road Recovery", desc: "Bogged, ditched, or stuck off-road — we winch you back out." },
 ];
 
 const steps = [
@@ -50,6 +50,33 @@ const testimonials = [
   { name: "Marcus O.", role: "Fleet Manager", quote: "CAAS pulled two of our rigs out of a bad situation overnight. Fast, professional, and no drama." },
   { name: "Angela T.", role: "Construction PM", quote: "They moved a 30-ton excavator across three sites without a single issue. Our go-to." },
   { name: "Daniel R.", role: "Business Owner", quote: "Called at 2am after a flood. They were there in under an hour and saved my van." },
+];
+
+const gallerySlides = [
+  { label: "Highway Recovery", tone: "from-primary/30 to-primary/5" },
+  { label: "Heavy Equipment", tone: "from-primary/10 to-primary/30" },
+  { label: "Container Haul", tone: "from-primary/25 to-primary/5" },
+  { label: "Generator Move", tone: "from-primary/5 to-primary/25" },
+  { label: "Flood Recovery", tone: "from-primary/20 to-primary/5" },
+  { label: "Roadside Assist", tone: "from-primary/10 to-primary/25" },
+];
+
+const industries = [
+  { icon: Car, title: "Individual Vehicle Owners", desc: "Fast and reliable towing, recovery, roadside assistance, and long-distance vehicle transport." },
+  { icon: Shield, title: "Insurance Companies", desc: "Accident recovery, breakdown assistance, vehicle transportation, and claims support." },
+  { icon: Truck, title: "Logistics & Transport Companies", desc: "Recovery and transport services for trucks, trailers, commercial vehicles, and freight." },
+  { icon: Building2, title: "Commercial Fleet Operators", desc: "24/7 support for company vehicles, delivery vans, trucks, and business fleets." },
+  { icon: Boxes, title: "Freight & Cargo Companies", desc: "Container hauling, cargo movement, and specialized freight transport solutions." },
+  { icon: HardHat, title: "Construction Companies", desc: "Transport and recovery of construction equipment, machinery, and site vehicles." },
+  { icon: Cog, title: "Heavy Equipment Owners", desc: "Safe transportation of excavators, forklifts, generators, compressors, and industrial equipment." },
+  { icon: Plug, title: "Generator Suppliers & Power Companies", desc: "Generator transport, relocation, loading, and delivery." },
+  { icon: Warehouse, title: "Container & Warehousing Companies", desc: "Container movement, recovery, and relocation services." },
+  { icon: Store, title: "Car Dealerships", desc: "Vehicle delivery, dealer transfers, auction pickups, and customer vehicle transportation." },
+  { icon: Ship, title: "Vehicle Importers & Auto Traders", desc: "Transport from ports, auctions, dealerships, and storage facilities." },
+  { icon: Factory, title: "Manufacturing & Industrial Companies", desc: "Movement of machinery, industrial equipment, and production assets." },
+  { icon: Building, title: "Government & Public Institutions", desc: "Emergency recovery, fleet transport, and specialized transport support." },
+  { icon: Hotel, title: "Hotels, Hospitals & Corporate Organizations", desc: "Reliable transport support for company fleets, utility vehicles, and equipment." },
+  { icon: Hammer, title: "Equipment Rental Companies", desc: "Transportation and recovery of rented construction and industrial equipment." },
 ];
 
 function Home() {
@@ -82,7 +109,7 @@ function Home() {
               <Link to="/request" className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-4 font-heading uppercase tracking-wider hover:btn-glow transition-all">
                 Request Service <ArrowRight className="h-4 w-4" />
               </Link>
-              <a href="tel:+233538246745" className="inline-flex items-center gap-2 border border-border bg-background/40 backdrop-blur px-6 py-4 font-heading uppercase tracking-wider hover:border-primary hover:text-primary transition-all">
+              <a href="tel:+233246773279" className="inline-flex items-center gap-2 border border-border bg-background/40 backdrop-blur px-6 py-4 font-heading uppercase tracking-wider hover:border-primary hover:text-primary transition-all">
                 <PhoneCall className="h-4 w-4" /> Call Now
               </a>
             </div>
@@ -120,30 +147,40 @@ function Home() {
         </div>
       </div>
 
-      {/* WHY */}
+      {/* WHY CHOOSE CAAS */}
       <section className="py-24 relative">
         <div className="container-x">
-          <div className="grid lg:grid-cols-[1fr_2fr] gap-12 items-start">
-            <div>
-              <div className="text-xs uppercase tracking-[0.3em] text-primary mb-4">Why Choose CAAS</div>
-              <h2 className="font-display text-5xl lg:text-6xl leading-[0.95]">
-                Built for the <span className="text-primary">heavy jobs</span> nobody else wants.
-              </h2>
-              <p className="mt-6 text-muted-foreground">
-                From roadside rescues to industrial hauls, we bring the trucks, the training, and the calm professionalism that keeps your day moving.
-              </p>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {perks.map((p) => (
-                <div key={p.title} className="group border border-border bg-surface p-6 hover:border-primary transition-all hover:-translate-y-1 duration-300">
-                  <div className="inline-flex h-12 w-12 items-center justify-center bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors mb-4">
-                    <p.icon className="h-6 w-6" />
-                  </div>
-                  <h3 className="font-heading uppercase tracking-wider text-lg">{p.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
-                </div>
-              ))}
-            </div>
+          <div className="max-w-3xl">
+            <div className="text-xs uppercase tracking-[0.3em] text-primary mb-4">Why Choose CAAS</div>
+            <h2 className="font-display text-5xl lg:text-7xl leading-[0.95]">
+              From Cars To <span className="text-primary">Cargo.</span><br />
+              We Move It All.
+            </h2>
+            <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
+              Trusted for vehicle towing, recovery, roadside assistance, freight, container hauling, generator transport, and heavy equipment movement across Ghana.
+            </p>
+          </div>
+
+          <div className="mt-12">
+            <Carousel opts={{ loop: true, align: "start" }} className="w-full">
+              <CarouselContent className="-ml-4">
+                {gallerySlides.map((g) => (
+                  <CarouselItem key={g.label} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+                    <div className={`relative aspect-[4/3] w-full overflow-hidden border border-border bg-gradient-to-br ${g.tone} hero-grid flex items-end`}>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="font-display text-6xl text-primary/30">CAAS</div>
+                      </div>
+                      <div className="relative w-full p-5 bg-gradient-to-t from-background via-background/70 to-transparent">
+                        <div className="text-xs uppercase tracking-widest text-primary">On the Job</div>
+                        <div className="font-heading uppercase tracking-wider mt-1">{g.label}</div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden sm:flex" />
+              <CarouselNext className="hidden sm:flex" />
+            </Carousel>
           </div>
         </div>
       </section>
@@ -198,8 +235,43 @@ function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
+      {/* INDUSTRIES SERVED */}
       <section className="py-24 bg-surface border-y border-border">
+        <div className="container-x">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 mb-12">
+            <div className="max-w-2xl">
+              <div className="text-xs uppercase tracking-[0.3em] text-primary mb-4">Industries We Serve</div>
+              <h2 className="font-display text-5xl lg:text-6xl leading-[0.95]">
+                Built for <span className="text-primary">every sector.</span>
+              </h2>
+              <p className="mt-4 text-muted-foreground">
+                From individual drivers to national fleets — CAAS moves the people, vehicles, and equipment that keep Ghana running.
+              </p>
+            </div>
+          </div>
+
+          <Carousel opts={{ loop: true, align: "start" }} className="w-full">
+            <CarouselContent className="-ml-4">
+              {industries.map((ind) => (
+                <CarouselItem key={ind.title} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                  <div className="h-full group border border-border bg-background p-6 hover:border-primary transition-all">
+                    <div className="inline-flex h-12 w-12 items-center justify-center bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors mb-4">
+                      <ind.icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="font-heading uppercase tracking-wider text-base leading-snug">{ind.title}</h3>
+                    <p className="mt-2 text-sm text-muted-foreground">{ind.desc}</p>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden sm:flex" />
+            <CarouselNext className="hidden sm:flex" />
+          </Carousel>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="py-24">
         <div className="container-x">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <div className="text-xs uppercase tracking-[0.3em] text-primary mb-4">Testimonials</div>
@@ -207,7 +279,7 @@ function Home() {
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {testimonials.map((t) => (
-              <div key={t.name} className="border border-border bg-background p-7 hover:border-primary transition-colors">
+              <div key={t.name} className="border border-border bg-surface p-7 hover:border-primary transition-colors">
                 <div className="flex gap-1 text-primary mb-4">
                   {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-primary" />)}
                 </div>
@@ -223,7 +295,7 @@ function Home() {
       </section>
 
       {/* CTA */}
-      <section className="py-24">
+      <section className="py-24 bg-surface border-t border-border">
         <div className="container-x">
           <div className="relative overflow-hidden border border-primary/30 bg-gradient-to-br from-surface to-background p-10 md:p-16">
             <div className="absolute top-0 right-0 h-full w-1/2 diag-stripes opacity-[0.06]" />
@@ -245,7 +317,7 @@ function Home() {
                 </ul>
               </div>
               <div className="flex flex-col gap-3">
-                <a href="tel:+233538246745" className="text-center bg-primary text-primary-foreground px-6 py-5 font-heading uppercase tracking-widest hover:btn-glow transition-all">
+                <a href="tel:+233246773279" className="text-center bg-primary text-primary-foreground px-6 py-5 font-heading uppercase tracking-widest hover:btn-glow transition-all">
                   <PhoneCall className="inline h-4 w-4 mr-2" /> Call 24/7
                 </a>
                 <Link to="/request" className="text-center border border-border bg-background/60 px-6 py-5 font-heading uppercase tracking-widest hover:border-primary hover:text-primary transition-all">

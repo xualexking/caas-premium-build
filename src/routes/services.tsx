@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Truck, Wrench, Waves, BatteryCharging, Container, Zap, Package, Building2, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Truck, Wrench, Waves, BatteryCharging, Container, Zap, Package, Building2, Anchor, ArrowRight, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
       { title: "Services — CAAS Towing & Recovery" },
-      { name: "description", content: "Full service list: vehicle towing, heavy equipment transport, flood recovery, roadside assistance, container transport, generator hauling, freight, and commercial fleet support." },
+      { name: "description", content: "Full service list: vehicle towing, heavy equipment transport, container hauling, generator hauling, freight, vehicle recovery, flood recovery, roadside assistance, commercial fleet support, and winch-out & off-road recovery." },
       { property: "og:title", content: "Services — CAAS Towing & Recovery" },
-      { property: "og:description", content: "Every service CAAS Towing & Recovery offers, from roadside assistance to heavy equipment hauling." },
+      { property: "og:description", content: "Every service CAAS Towing & Recovery offers, from vehicle towing to winch-out and off-road recovery." },
     ],
   }),
   component: Services,
@@ -15,14 +15,15 @@ export const Route = createFileRoute("/services")({
 
 const list = [
   { icon: Truck, title: "Vehicle Towing", desc: "Light-, medium-, and heavy-duty towing for cars, SUVs, trucks, vans and specialty vehicles.", benefits: ["Flatbed & wheel-lift", "Damage-free loading", "Long-distance transport"] },
+  { icon: Container, title: "Heavy Equipment Transport", desc: "Excavators, loaders, forklifts, and construction machinery moved with precision.", benefits: ["Lowboy trailers", "Permitted loads", "Cross-country routing"] },
+  { icon: Package, title: "Container Hauling", desc: "20ft and 40ft container pickup, delivery, and repositioning for depots and yards.", benefits: ["Tilt & chassis units", "Port pickups", "Yard-to-yard moves"] },
+  { icon: Zap, title: "Generator Hauling", desc: "Industrial generator transport with careful loading and secure tie-downs.", benefits: ["Any size", "Site delivery", "Rigging assistance"] },
+  { icon: Truck, title: "Freight Services", desc: "Time-critical freight moved reliably with tracking and communication.", benefits: ["Same-day options", "Dedicated units", "Real-time updates"] },
   { icon: Wrench, title: "Vehicle Recovery", desc: "Ditch pulls, rollovers, off-road recovery — brought back safely with the right rigging.", benefits: ["Winch & rigging expertise", "Rotator support", "Off-road capable"] },
   { icon: Waves, title: "Flood Recovery", desc: "Rapid response to water-damaged vehicles and equipment. Discreet and careful.", benefits: ["24/7 emergency crews", "Salvage handling", "Insurance-friendly"] },
   { icon: BatteryCharging, title: "Roadside Assistance", desc: "Jump-starts, tire changes, lockouts, and fuel delivery from friendly drivers.", benefits: ["Fast ETAs", "Fully equipped trucks", "Fair flat rates"] },
-  { icon: Container, title: "Heavy Equipment Transport", desc: "Excavators, loaders, forklifts, and construction machinery moved with precision.", benefits: ["Lowboy trailers", "Permitted loads", "Cross-state routing"] },
-  { icon: Package, title: "Container Transport", desc: "20ft and 40ft container pickup, delivery, and repositioning for depots and yards.", benefits: ["Tilt & chassis units", "Port pickups", "Yard-to-yard moves"] },
-  { icon: Zap, title: "Generator Hauling", desc: "Industrial generator transport with careful loading and secure tie-downs.", benefits: ["Any size", "Site delivery", "Rigging assistance"] },
-  { icon: Truck, title: "Freight Services", desc: "Time-critical freight moved reliably with tracking and communication.", benefits: ["Same-day options", "Dedicated units", "Real-time updates"] },
   { icon: Building2, title: "Commercial Fleet Support", desc: "Dedicated dispatch and account management for fleet operators.", benefits: ["Priority response", "Consolidated billing", "Custom SLAs"] },
+  { icon: Anchor, title: "Winch-Out & Off-Road Recovery", desc: "Bogged, ditched, or stuck off-road — we winch you out with the right gear and technique.", benefits: ["Heavy-duty winches", "Trained operators", "Any terrain"] },
 ];
 
 function Services() {

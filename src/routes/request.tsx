@@ -50,7 +50,7 @@ const empty: Form = {
   agreed: false,
 };
 
-const WHATSAPP_NUMBER = "233538246745";
+const WHATSAPP_NUMBER = "233246773279";
 
 function categoryOf(service: string): Category {
   return SERVICES.find((s) => s.name === service)?.category ?? "generic";
@@ -141,7 +141,7 @@ function RequestPage() {
             For emergencies, call our 24/7 line.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a href="tel:+233538246745" className="bg-primary text-primary-foreground px-6 py-3 font-heading uppercase tracking-wider">Call Now</a>
+            <a href="tel:+233246773279" className="bg-primary text-primary-foreground px-6 py-3 font-heading uppercase tracking-wider">Call Now</a>
             <button onClick={() => { setForm(empty); setPhotos([]); setStep(0); setSubmitted(false); }} className="border border-border px-6 py-3 font-heading uppercase tracking-wider hover:border-primary">New Request</button>
           </div>
         </div>

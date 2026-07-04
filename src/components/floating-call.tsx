@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = "233538246745";
+const WHATSAPP_NUMBER = "233246773279";
 const INTRO = "Hello CAAS, I need towing assistance.";
 
 export function FloatingCall() {
