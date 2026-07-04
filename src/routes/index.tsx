@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import Autoplay from "embla-carousel-autoplay";
+import { useState, useEffect } from "react";
 import {
   Truck, Wrench, Waves, BatteryCharging, Container, Zap, Package, Building2, ShieldCheck,
   Clock, Users, Gauge, DollarSign, ArrowRight, PhoneCall, Star, CheckCircle2, Anchor,
   Car, Shield, Boxes, Factory, Warehouse, HardHat, Hammer, Plug, Store, Ship, Building, Hotel, Cog,
+  MessageSquarePlus,
 } from "lucide-react";
 import hero from "@/assets/hero-truck.jpg";
 import logo from "@/assets/caas-logo.asset.json";
@@ -12,6 +14,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { getApprovedReviews, type Review } from "@/lib/reviews";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -51,6 +54,12 @@ const testimonials = [
   { name: "Daniel R.", role: "Business Owner", quote: "Called at 2am after a flood. They were there in under an hour and saved my van." },
 ];
 
+const SEED_REVIEWS: Review[] = [
+  { id: -1, name: "Marcus O.", role: "Fleet Manager", rating: 5, quote: "CAAS pulled two of our rigs out of a bad situation overnight. Fast, professional, and no drama.", status: "approved", created_at: "", reviewed_at: null },
+  { id: -2, name: "Angela T.", role: "Construction PM", rating: 5, quote: "They moved a 30-ton excavator across three sites without a single issue. Our go-to.", status: "approved", created_at: "", reviewed_at: null },
+  { id: -3, name: "Daniel R.", role: "Business Owner", rating: 5, quote: "Called at 2am after a flood. They were there in under an hour and saved my van.", status: "approved", created_at: "", reviewed_at: null },
+];
+
 const gallerySlides = [
   { label: "Highway Recovery", tone: "from-primary/30 to-primary/5" },
   { label: "Heavy Equipment", tone: "from-primary/10 to-primary/30" },
@@ -79,6 +88,14 @@ const industries = [
 ];
 
 function Home() {
+  const [reviews, setReviews] = useState<Review[]>(SEED_REVIEWS);
+
+  useEffect(() => {
+    getApprovedReviews().then((rows) => {
+      if (rows.length > 0) setReviews(rows);
+    }).catch(() => {/* keep seed reviews on error */});
+  }, []);
+
   return (
     <>
       {/* HERO */}
@@ -268,20 +285,24 @@ function Home() {
       {/* TESTIMONIALS */}
       <section className="py-24">
         <div className="container-x">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="text-xs uppercase tracking-[0.3em] text-primary mb-4">Testimonials</div>
-            <h2 className="font-display text-5xl lg:text-6xl leading-[0.95]">Trusted on the <span className="text-primary">road.</span></h2>
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 mb-12">
+            <div className="text-center sm:text-left max-w-2xl">
+              <div className="text-xs uppercase tracking-[0.3em] text-primary mb-4">Testimonials</div>
+              <h2 className="font-display text-5xl lg:text-6xl leading-[0.95]">Trusted on the <span className="text-primary">road.</span></h2>
+            </div>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
-            {testimonials.map((t) => (
-              <div key={t.name} className="border border-border bg-surface p-7 hover:border-primary transition-colors">
+            {reviews.map((t) => (
+              <div key={t.id} className="border border-border bg-surface p-7 hover:border-primary transition-colors">
                 <div className="flex gap-1 text-primary mb-4">
-                  {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-primary" />)}
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className={`h-4 w-4 ${i < t.rating ? "fill-primary" : "fill-transparent"}`} />
+                  ))}
                 </div>
                 <p className="text-foreground/90 leading-relaxed">"{t.quote}"</p>
                 <div className="mt-5 pt-5 border-t border-border">
                   <div className="font-heading uppercase tracking-wider text-sm">{t.name}</div>
-                  <div className="text-xs text-muted-foreground">{t.role}</div>
+                  {t.role && <div className="text-xs text-muted-foreground">{t.role}</div>}
                 </div>
               </div>
             ))}

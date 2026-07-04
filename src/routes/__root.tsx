@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -14,6 +15,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { FloatingCall } from "@/components/floating-call";
+import { ReviewPopupTrigger } from "@/components/review-popup";
 
 function NotFoundComponent() {
   return (
@@ -92,16 +94,23 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { location } = useRouterState();
+  const isAdmin = location.pathname.startsWith("/garage-dispatch");
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen flex flex-col">
-        <SiteHeader />
-        <main className="flex-1">
-          <Outlet />
-        </main>
-        <SiteFooter />
-        <FloatingCall />
-      </div>
+      {isAdmin ? (
+        <Outlet />
+      ) : (
+        <div className="min-h-screen flex flex-col">
+          <SiteHeader />
+          <main className="flex-1">
+            <Outlet />
+          </main>
+          <SiteFooter />
+          <FloatingCall />
+          <ReviewPopupTrigger />
+        </div>
+      )}
     </QueryClientProvider>
   );
 }
