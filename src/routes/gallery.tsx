@@ -25,8 +25,26 @@ const FALLBACK: GalleryItem[] = [
 
 
 function Gallery() {
-  const [filter, setFilter] = useState<(typeof categories)[number]>("All");
-  const visible = items.filter((i) => filter === "All" || i.cat === filter);
+  const [items, setItems] = useState<GalleryItem[]>([]);
+  const [loaded, setLoaded] = useState(false);
+  const [filter, setFilter] = useState<string>("All");
+
+  useEffect(() => {
+    listGallery({ data: { landingOnly: false } })
+      .then((rows) => setItems(rows as GalleryItem[]))
+      .catch(() => setItems([]))
+      .finally(() => setLoaded(true));
+  }, []);
+
+  const source = loaded && items.length > 0 ? items : FALLBACK;
+
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    source.forEach((i) => set.add(i.category));
+    return ["All", ...Array.from(set)];
+  }, [source]);
+
+  const visible = source.filter((i) => filter === "All" || i.category === filter);
 
   return (
     <>
@@ -55,22 +73,35 @@ function Gallery() {
             ))}
           </div>
 
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-            {visible.map((it, i) => (
-              <div key={i} className="break-inside-avoid group relative overflow-hidden border border-border bg-surface">
-                <div className={`${it.ratio} w-full hero-grid bg-gradient-to-br from-surface-elevated to-background flex items-center justify-center`}>
-                  <div className="font-display text-6xl text-primary/20">CAAS</div>
+          {visible.length === 0 ? (
+            <div className="border border-border bg-surface p-16 text-center text-muted-foreground font-heading uppercase tracking-wider text-sm">
+              No items yet
+            </div>
+          ) : (
+            <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+              {visible.map((it) => (
+                <div key={it.id} className="break-inside-avoid group relative overflow-hidden border border-border bg-surface">
+                  <div className={`${it.layout} w-full relative bg-gradient-to-br from-surface-elevated to-background flex items-center justify-center`}>
+                    {it.media_url ? (
+                      <img src={it.media_url} alt={it.title} className="absolute inset-0 h-full w-full object-cover" />
+                    ) : (
+                      <div className="hero-grid absolute inset-0 flex items-center justify-center">
+                        <div className="font-display text-6xl text-primary/20">CAAS</div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-background via-background/80 to-transparent translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all">
+                    <div className="text-xs uppercase tracking-widest text-primary">{it.category}</div>
+                    <div className="font-heading uppercase tracking-wider mt-1">{it.title}</div>
+                    {it.location && <div className="text-xs text-muted-foreground">{it.location}</div>}
+                  </div>
                 </div>
-                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-background via-background/80 to-transparent translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all">
-                  <div className="text-xs uppercase tracking-widest text-primary">{it.cat}</div>
-                  <div className="font-heading uppercase tracking-wider mt-1">{it.title}</div>
-                  <div className="text-xs text-muted-foreground">{it.loc}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </>
   );
 }
+
