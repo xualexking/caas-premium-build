@@ -13,7 +13,6 @@ import { LayoutDashboard, Star, LogOut, Menu, X, ChevronRight, Image as ImageIco
 export const Route = createFileRoute("/garage-dispatch")({
   // Check session on the server before rendering — eliminates the client spinner
   beforeLoad: async ({ location }) => {
-  beforeLoad: async ({ location }) => {
     // Login page never needs an auth check
     if (location.pathname === "/garage-dispatch/login") return;
     const { authenticated } = await checkAdminSession();
@@ -28,6 +27,7 @@ const logoUrl = "/kobby.svg";
 
 const nav = [
   { to: "/garage-dispatch/reviews", label: "Reviews", icon: Star },
+  { to: "/garage-dispatch/gallery", label: "Gallery", icon: ImageIcon },
 ];
 
 function AdminLayout() {
