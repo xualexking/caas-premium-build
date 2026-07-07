@@ -11,11 +11,15 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as RequestRouteImport } from './routes/request'
+import { Route as GarageDispatchRouteImport } from './routes/garage-dispatch'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as DriversRouteImport } from './routes/drivers'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GarageDispatchReviewsRouteImport } from './routes/garage-dispatch.reviews'
+import { Route as GarageDispatchLoginRouteImport } from './routes/garage-dispatch.login'
+import { Route as GarageDispatchGalleryRouteImport } from './routes/garage-dispatch.gallery'
 
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
@@ -25,6 +29,11 @@ const ServicesRoute = ServicesRouteImport.update({
 const RequestRoute = RequestRouteImport.update({
   id: '/request',
   path: '/request',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GarageDispatchRoute = GarageDispatchRouteImport.update({
+  id: '/garage-dispatch',
+  path: '/garage-dispatch',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryRoute = GalleryRouteImport.update({
@@ -52,6 +61,21 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GarageDispatchReviewsRoute = GarageDispatchReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => GarageDispatchRoute,
+} as any)
+const GarageDispatchLoginRoute = GarageDispatchLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => GarageDispatchRoute,
+} as any)
+const GarageDispatchGalleryRoute = GarageDispatchGalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => GarageDispatchRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -59,8 +83,12 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/drivers': typeof DriversRoute
   '/gallery': typeof GalleryRoute
+  '/garage-dispatch': typeof GarageDispatchRouteWithChildren
   '/request': typeof RequestRoute
   '/services': typeof ServicesRoute
+  '/garage-dispatch/gallery': typeof GarageDispatchGalleryRoute
+  '/garage-dispatch/login': typeof GarageDispatchLoginRoute
+  '/garage-dispatch/reviews': typeof GarageDispatchReviewsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -68,8 +96,12 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/drivers': typeof DriversRoute
   '/gallery': typeof GalleryRoute
+  '/garage-dispatch': typeof GarageDispatchRouteWithChildren
   '/request': typeof RequestRoute
   '/services': typeof ServicesRoute
+  '/garage-dispatch/gallery': typeof GarageDispatchGalleryRoute
+  '/garage-dispatch/login': typeof GarageDispatchLoginRoute
+  '/garage-dispatch/reviews': typeof GarageDispatchReviewsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -78,8 +110,12 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/drivers': typeof DriversRoute
   '/gallery': typeof GalleryRoute
+  '/garage-dispatch': typeof GarageDispatchRouteWithChildren
   '/request': typeof RequestRoute
   '/services': typeof ServicesRoute
+  '/garage-dispatch/gallery': typeof GarageDispatchGalleryRoute
+  '/garage-dispatch/login': typeof GarageDispatchLoginRoute
+  '/garage-dispatch/reviews': typeof GarageDispatchReviewsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -89,8 +125,12 @@ export interface FileRouteTypes {
     | '/contact'
     | '/drivers'
     | '/gallery'
+    | '/garage-dispatch'
     | '/request'
     | '/services'
+    | '/garage-dispatch/gallery'
+    | '/garage-dispatch/login'
+    | '/garage-dispatch/reviews'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -98,8 +138,12 @@ export interface FileRouteTypes {
     | '/contact'
     | '/drivers'
     | '/gallery'
+    | '/garage-dispatch'
     | '/request'
     | '/services'
+    | '/garage-dispatch/gallery'
+    | '/garage-dispatch/login'
+    | '/garage-dispatch/reviews'
   id:
     | '__root__'
     | '/'
@@ -107,8 +151,12 @@ export interface FileRouteTypes {
     | '/contact'
     | '/drivers'
     | '/gallery'
+    | '/garage-dispatch'
     | '/request'
     | '/services'
+    | '/garage-dispatch/gallery'
+    | '/garage-dispatch/login'
+    | '/garage-dispatch/reviews'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -117,6 +165,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DriversRoute: typeof DriversRoute
   GalleryRoute: typeof GalleryRoute
+  GarageDispatchRoute: typeof GarageDispatchRouteWithChildren
   RequestRoute: typeof RequestRoute
   ServicesRoute: typeof ServicesRoute
 }
@@ -135,6 +184,13 @@ declare module '@tanstack/react-router' {
       path: '/request'
       fullPath: '/request'
       preLoaderRoute: typeof RequestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/garage-dispatch': {
+      id: '/garage-dispatch'
+      path: '/garage-dispatch'
+      fullPath: '/garage-dispatch'
+      preLoaderRoute: typeof GarageDispatchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery': {
@@ -172,8 +228,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/garage-dispatch/reviews': {
+      id: '/garage-dispatch/reviews'
+      path: '/reviews'
+      fullPath: '/garage-dispatch/reviews'
+      preLoaderRoute: typeof GarageDispatchReviewsRouteImport
+      parentRoute: typeof GarageDispatchRoute
+    }
+    '/garage-dispatch/login': {
+      id: '/garage-dispatch/login'
+      path: '/login'
+      fullPath: '/garage-dispatch/login'
+      preLoaderRoute: typeof GarageDispatchLoginRouteImport
+      parentRoute: typeof GarageDispatchRoute
+    }
+    '/garage-dispatch/gallery': {
+      id: '/garage-dispatch/gallery'
+      path: '/gallery'
+      fullPath: '/garage-dispatch/gallery'
+      preLoaderRoute: typeof GarageDispatchGalleryRouteImport
+      parentRoute: typeof GarageDispatchRoute
+    }
   }
 }
+
+interface GarageDispatchRouteChildren {
+  GarageDispatchGalleryRoute: typeof GarageDispatchGalleryRoute
+  GarageDispatchLoginRoute: typeof GarageDispatchLoginRoute
+  GarageDispatchReviewsRoute: typeof GarageDispatchReviewsRoute
+}
+
+const GarageDispatchRouteChildren: GarageDispatchRouteChildren = {
+  GarageDispatchGalleryRoute: GarageDispatchGalleryRoute,
+  GarageDispatchLoginRoute: GarageDispatchLoginRoute,
+  GarageDispatchReviewsRoute: GarageDispatchReviewsRoute,
+}
+
+const GarageDispatchRouteWithChildren = GarageDispatchRoute._addFileChildren(
+  GarageDispatchRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -181,6 +274,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DriversRoute: DriversRoute,
   GalleryRoute: GalleryRoute,
+  GarageDispatchRoute: GarageDispatchRouteWithChildren,
   RequestRoute: RequestRoute,
   ServicesRoute: ServicesRoute,
 }

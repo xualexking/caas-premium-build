@@ -39,14 +39,14 @@ export const submitReview = createServerFn({ method: "POST" })
 export const getApprovedReviews = createServerFn({ method: "GET" }).handler(
   async () => {
     await ensureSchema();
-    const rows = await sql<Review[]>`
+    const rows = await (sql as any)`
       SELECT id, name, role, rating, quote, status, created_at, reviewed_at
       FROM reviews
       WHERE status = 'approved'
       ORDER BY reviewed_at DESC
       LIMIT 20
     `;
-    return rows;
+    return rows as Review[];
   },
 );
 
@@ -60,13 +60,13 @@ export const getAdminReviews = createServerFn({ method: "GET" })
     const authed = await getAdminSession();
     if (!authed) throw new Error("Unauthorized");
     await ensureSchema();
-    const rows = await sql<Review[]>`
+    const rows = await (sql as any)`
       SELECT id, name, role, rating, quote, status, created_at, reviewed_at
       FROM reviews
       WHERE status = ${data.status}
       ORDER BY created_at DESC
     `;
-    return rows;
+    return rows as Review[];
   });
 
 // ---- Admin: approve --------------------------------------------------------
@@ -125,7 +125,7 @@ export const getReviewCounts = createServerFn({ method: "GET" }).handler(async (
   const authed = await getAdminSession();
   if (!authed) throw new Error("Unauthorized");
   await ensureSchema();
-  const rows = await sql<{ status: string; count: string }[]>`
+  const rows = await (sql as any)`
     SELECT status, COUNT(*)::text as count FROM reviews GROUP BY status
   `;
   const counts = { pending: 0, approved: 0, rejected: 0 };
