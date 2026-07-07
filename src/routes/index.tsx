@@ -15,6 +15,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { getApprovedReviews, type Review } from "@/lib/reviews";
+import { listGallery, type GalleryItem } from "@/lib/gallery";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -89,11 +90,15 @@ const industries = [
 
 function Home() {
   const [reviews, setReviews] = useState<Review[]>(SEED_REVIEWS);
+  const [landingGallery, setLandingGallery] = useState<GalleryItem[]>([]);
 
   useEffect(() => {
     getApprovedReviews().then((rows) => {
       if (rows.length > 0) setReviews(rows);
     }).catch(() => {/* keep seed reviews on error */});
+    listGallery({ data: { landingOnly: true } })
+      .then((rows) => setLandingGallery(rows as GalleryItem[]))
+      .catch(() => {/* fallback to hardcoded slides */});
   }, []);
 
   return (
