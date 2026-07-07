@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { listGallery, type GalleryItem } from "@/lib/gallery";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
@@ -13,18 +14,15 @@ export const Route = createFileRoute("/gallery")({
   component: Gallery,
 });
 
-const categories = ["All", "Vehicle Towing", "Recovery", "Heavy Equipment", "Containers", "Freight"] as const;
-
-const items = [
-  { cat: "Vehicle Towing", title: "Overnight highway tow", loc: "I-95 corridor", ratio: "aspect-[4/5]" },
-  { cat: "Recovery", title: "Ditch recovery — cargo van", loc: "Rural route", ratio: "aspect-square" },
-  { cat: "Heavy Equipment", title: "Excavator relocation", loc: "Construction site", ratio: "aspect-[3/4]" },
-  { cat: "Containers", title: "40ft container drop", loc: "Port yard", ratio: "aspect-[4/3]" },
-  { cat: "Freight", title: "Time-critical freight", loc: "Cross-state", ratio: "aspect-square" },
-  { cat: "Recovery", title: "Flood recovery — sedan", loc: "Coastal district", ratio: "aspect-[3/4]" },
-  { cat: "Heavy Equipment", title: "Generator hauling", loc: "Industrial park", ratio: "aspect-[4/5]" },
-  { cat: "Vehicle Towing", title: "Fleet vehicle pickup", loc: "Commercial depot", ratio: "aspect-[4/3]" },
+const FALLBACK: GalleryItem[] = [
+  { id: -1, category: "Vehicle Towing", title: "Overnight highway tow", location: "I-95 corridor", layout: "aspect-[4/5]", media_url: "", on_landing: false, display_order: 0, created_at: "" },
+  { id: -2, category: "Recovery", title: "Ditch recovery — cargo van", location: "Rural route", layout: "aspect-square", media_url: "", on_landing: false, display_order: 0, created_at: "" },
+  { id: -3, category: "Heavy Equipment", title: "Excavator relocation", location: "Construction site", layout: "aspect-[3/4]", media_url: "", on_landing: false, display_order: 0, created_at: "" },
+  { id: -4, category: "Containers", title: "40ft container drop", location: "Port yard", layout: "aspect-[4/3]", media_url: "", on_landing: false, display_order: 0, created_at: "" },
+  { id: -5, category: "Freight", title: "Time-critical freight", location: "Cross-state", layout: "aspect-square", media_url: "", on_landing: false, display_order: 0, created_at: "" },
+  { id: -6, category: "Recovery", title: "Flood recovery — sedan", location: "Coastal district", layout: "aspect-[3/4]", media_url: "", on_landing: false, display_order: 0, created_at: "" },
 ];
+
 
 function Gallery() {
   const [filter, setFilter] = useState<(typeof categories)[number]>("All");
