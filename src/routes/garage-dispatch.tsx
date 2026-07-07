@@ -8,10 +8,11 @@ import {
 } from "@tanstack/react-router";
 import { useState } from "react";
 import { adminLogoutFn, checkAdminSession } from "@/lib/reviews";
-import { LayoutDashboard, Star, LogOut, Menu, X, ChevronRight } from "lucide-react";
+import { LayoutDashboard, Star, LogOut, Menu, X, ChevronRight, Image as ImageIcon } from "lucide-react";
 
 export const Route = createFileRoute("/garage-dispatch")({
   // Check session on the server before rendering — eliminates the client spinner
+  beforeLoad: async ({ location }) => {
   beforeLoad: async ({ location }) => {
     // Login page never needs an auth check
     if (location.pathname === "/garage-dispatch/login") return;
