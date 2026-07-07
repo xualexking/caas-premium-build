@@ -58,13 +58,13 @@ export const listGallery = createServerFn({ method: "GET" })
   .handler(async ({ data }) => {
     await ensureSchema();
     const rows = data.landingOnly
-      ? await sql<GalleryItem[]>`
+      ? await (sql as any)`
           SELECT id, title, category, location, layout, media_url, on_landing, display_order, created_at
           FROM gallery_items
           WHERE on_landing = TRUE
           ORDER BY display_order ASC, created_at DESC
         `
-      : await sql<GalleryItem[]>`
+      : await (sql as any)`
           SELECT id, title, category, location, layout, media_url, on_landing, display_order, created_at
           FROM gallery_items
           ORDER BY display_order ASC, created_at DESC
@@ -78,7 +78,7 @@ export const adminListGallery = createServerFn({ method: "GET" }).handler(
     const authed = await getAdminSession();
     if (!authed) throw new Error("Unauthorized");
     await ensureSchema();
-    const rows = await sql<GalleryItem[]>`
+    const rows = await (sql as any)`
       SELECT id, title, category, location, layout, media_url, on_landing, display_order, created_at
       FROM gallery_items
       ORDER BY display_order ASC, created_at DESC
@@ -94,7 +94,7 @@ export const createGalleryItem = createServerFn({ method: "POST" })
     const authed = await getAdminSession();
     if (!authed) throw new Error("Unauthorized");
     await ensureSchema();
-    const rows = await sql<{ id: number }[]>`
+    const rows = await (sql as any)`
       INSERT INTO gallery_items (title, category, location, layout, media_url, on_landing)
       VALUES (${data.title}, ${data.category}, ${data.location ?? null}, ${data.layout}, ${data.media_url}, ${data.on_landing ?? false})
       RETURNING id

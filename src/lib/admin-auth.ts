@@ -69,7 +69,7 @@ export async function adminLogin(
 ): Promise<{ ok: boolean; error?: string }> {
   await ensureSchema();
 
-  const rows = await sql<{ id: number; password_hash: string }[]>`
+  const rows = await (sql as any)`
     SELECT id, password_hash FROM admin_users
     WHERE username = ${username}
     LIMIT 1
