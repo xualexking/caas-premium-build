@@ -46,7 +46,7 @@ export const getApprovedReviews = createServerFn({ method: "GET" }).handler(
       ORDER BY reviewed_at DESC
       LIMIT 20
     `;
-    return rows;
+    return rows as Review[];
   },
 );
 
@@ -66,7 +66,7 @@ export const getAdminReviews = createServerFn({ method: "GET" })
       WHERE status = ${data.status}
       ORDER BY created_at DESC
     `;
-    return rows;
+    return rows as Review[];
   });
 
 // ---- Admin: approve --------------------------------------------------------

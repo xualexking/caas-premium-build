@@ -69,7 +69,7 @@ export const listGallery = createServerFn({ method: "GET" })
           FROM gallery_items
           ORDER BY display_order ASC, created_at DESC
         `;
-    return rows;
+    return rows as GalleryItem[];
   });
 
 // ---- Admin: full list ------------------------------------------------------
@@ -83,7 +83,7 @@ export const adminListGallery = createServerFn({ method: "GET" }).handler(
       FROM gallery_items
       ORDER BY display_order ASC, created_at DESC
     `;
-    return rows;
+    return rows as GalleryItem[];
   },
 );
 
