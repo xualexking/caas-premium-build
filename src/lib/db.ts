@@ -42,6 +42,23 @@ export async function ensureSchema() {
     CREATE INDEX IF NOT EXISTS idx_reviews_status ON reviews(status)
   `;
 
+  // Gallery items table
+  await sql`
+    CREATE TABLE IF NOT EXISTS gallery_items (
+      id            SERIAL PRIMARY KEY,
+      title         VARCHAR(160) NOT NULL,
+      category      VARCHAR(80)  NOT NULL DEFAULT 'Vehicle Towing',
+      location      VARCHAR(160),
+      layout        VARCHAR(32)  NOT NULL DEFAULT 'aspect-[4/3]',
+      media_url     TEXT         NOT NULL,
+      on_landing    BOOLEAN      NOT NULL DEFAULT FALSE,
+      display_order INTEGER      NOT NULL DEFAULT 0,
+      created_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW()
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS idx_gallery_landing ON gallery_items(on_landing)`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_gallery_order ON gallery_items(display_order)`;
+
   // Seed the default admin user if none exists
   // Password: Dispatch@CAAS#2026!  (SHA-256 of password + SESSION_SECRET)
   await sql`
