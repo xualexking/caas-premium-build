@@ -4,11 +4,13 @@ import { Truck, Wrench, Waves, BatteryCharging, Container, Zap, Package, Buildin
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Services — CAAS Towing & Recovery" },
-      { name: "description", content: "Full service list: vehicle towing, heavy equipment transport, container hauling, generator hauling, freight, vehicle recovery, flood recovery, roadside assistance, commercial fleet support, and winch-out & off-road recovery." },
+      { title: "Services — Towing, Recovery & Heavy Transport | CAAS" },
+      { name: "description", content: "Full service list: vehicle towing, heavy equipment transport, container hauling, generator hauling, freight, recovery, roadside assistance, and off-road winch-out across Ghana." },
       { property: "og:title", content: "Services — CAAS Towing & Recovery" },
-      { property: "og:description", content: "Every service CAAS Towing & Recovery offers, from vehicle towing to winch-out and off-road recovery." },
+      { property: "og:description", content: "Every service CAAS Towing & Recovery offers — from vehicle towing to off-road winch-out." },
+      { property: "og:url", content: "https://caastowing.com/services" },
     ],
+    links: [{ rel: "canonical", href: "https://caastowing.com/services" }],
   }),
   component: Services,
 });

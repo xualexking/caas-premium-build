@@ -5,11 +5,13 @@ import { listGallery, type GalleryItem } from "@/lib/gallery";
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
-      { title: "Gallery — CAAS Towing & Recovery" },
-      { name: "description", content: "Recent CAAS Towing & Recovery jobs: vehicle recoveries, heavy equipment transports, container moves, and commercial fleet support." },
+      { title: "Gallery — Recent Towing & Recovery Jobs | CAAS" },
+      { name: "description", content: "Recent CAAS Towing & Recovery jobs: vehicle recoveries, heavy equipment transports, container moves, and commercial fleet support across Ghana." },
       { property: "og:title", content: "Gallery — CAAS Towing & Recovery" },
       { property: "og:description", content: "Recent recovery, transport, and towing work." },
+      { property: "og:url", content: "https://caastowing.com/gallery" },
     ],
+    links: [{ rel: "canonical", href: "https://caastowing.com/gallery" }],
   }),
   component: Gallery,
 });

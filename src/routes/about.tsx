@@ -5,11 +5,13 @@ import logo from "@/assets/caas-logo.asset.json";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — CAAS Towing & Recovery" },
-      { name: "description", content: "The story, mission, and values behind CAAS Towing & Recovery — a professional heavy-duty towing and recovery team trusted by drivers and fleets." },
+      { title: "About CAAS Towing & Recovery — Ghana's Trusted Towing Team" },
+      { name: "description", content: "The story, mission, and values behind CAAS Towing & Recovery — a professional heavy-duty towing and recovery team trusted by drivers and fleets across Ghana." },
       { property: "og:title", content: "About CAAS Towing & Recovery" },
       { property: "og:description", content: "Our story, mission, and values." },
+      { property: "og:url", content: "https://caastowing.com/about" },
     ],
+    links: [{ rel: "canonical", href: "https://caastowing.com/about" }],
   }),
   component: About,
 });
