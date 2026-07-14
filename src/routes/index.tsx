@@ -20,11 +20,13 @@ import { listGallery, type GalleryItem } from "@/lib/gallery";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "CAAS Towing & Recovery — 24/7 Heavy Duty Towing & Transport" },
+      { title: "CAAS Towing & Recovery — 24/7 Heavy Duty Towing & Transport in Ghana" },
       { name: "description", content: "24/7 emergency towing, heavy equipment transport, vehicle recovery, and commercial fleet support across Ghana. Fast dispatch. Trusted by drivers and fleets." },
       { property: "og:title", content: "CAAS Towing & Recovery — 24/7 Heavy Duty Towing" },
       { property: "og:description", content: "From cars to cargo — we move it all. Trusted across Ghana." },
+      { property: "og:url", content: "https://caastowing.com/" },
     ],
+    links: [{ rel: "canonical", href: "https://caastowing.com/" }],
   }),
   component: Home,
 });

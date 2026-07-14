@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as RequestRouteImport } from './routes/request'
 import { Route as GarageDispatchRouteImport } from './routes/garage-dispatch'
@@ -21,6 +22,11 @@ import { Route as GarageDispatchReviewsRouteImport } from './routes/garage-dispa
 import { Route as GarageDispatchLoginRouteImport } from './routes/garage-dispatch.login'
 import { Route as GarageDispatchGalleryRouteImport } from './routes/garage-dispatch.gallery'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/garage-dispatch': typeof GarageDispatchRouteWithChildren
   '/request': typeof RequestRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/garage-dispatch/gallery': typeof GarageDispatchGalleryRoute
   '/garage-dispatch/login': typeof GarageDispatchLoginRoute
   '/garage-dispatch/reviews': typeof GarageDispatchReviewsRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/garage-dispatch': typeof GarageDispatchRouteWithChildren
   '/request': typeof RequestRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/garage-dispatch/gallery': typeof GarageDispatchGalleryRoute
   '/garage-dispatch/login': typeof GarageDispatchLoginRoute
   '/garage-dispatch/reviews': typeof GarageDispatchReviewsRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/garage-dispatch': typeof GarageDispatchRouteWithChildren
   '/request': typeof RequestRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/garage-dispatch/gallery': typeof GarageDispatchGalleryRoute
   '/garage-dispatch/login': typeof GarageDispatchLoginRoute
   '/garage-dispatch/reviews': typeof GarageDispatchReviewsRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/garage-dispatch'
     | '/request'
     | '/services'
+    | '/sitemap.xml'
     | '/garage-dispatch/gallery'
     | '/garage-dispatch/login'
     | '/garage-dispatch/reviews'
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/garage-dispatch'
     | '/request'
     | '/services'
+    | '/sitemap.xml'
     | '/garage-dispatch/gallery'
     | '/garage-dispatch/login'
     | '/garage-dispatch/reviews'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/garage-dispatch'
     | '/request'
     | '/services'
+    | '/sitemap.xml'
     | '/garage-dispatch/gallery'
     | '/garage-dispatch/login'
     | '/garage-dispatch/reviews'
@@ -168,10 +180,18 @@ export interface RootRouteChildren {
   GarageDispatchRoute: typeof GarageDispatchRouteWithChildren
   RequestRoute: typeof RequestRoute
   ServicesRoute: typeof ServicesRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
@@ -277,6 +297,7 @@ const rootRouteChildren: RootRouteChildren = {
   GarageDispatchRoute: GarageDispatchRouteWithChildren,
   RequestRoute: RequestRoute,
   ServicesRoute: ServicesRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

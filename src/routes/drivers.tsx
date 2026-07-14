@@ -4,11 +4,13 @@ import { Wrench } from "lucide-react";
 export const Route = createFileRoute("/drivers")({
   head: () => ({
     meta: [
-      { title: "Partner Drivers — CAAS Towing & Recovery" },
-      { name: "description", content: "CAAS Towing & Recovery partner drivers program — coming soon." },
+      { title: "Partner Drivers Program — CAAS Towing & Recovery" },
+      { name: "description", content: "Join the CAAS Towing & Recovery partner drivers program for experienced tow, recovery, and heavy transport operators in Ghana — coming soon." },
       { property: "og:title", content: "Partner Drivers — CAAS Towing & Recovery" },
       { property: "og:description", content: "Partner drivers program coming soon." },
+      { property: "og:url", content: "https://caastowing.com/drivers" },
     ],
+    links: [{ rel: "canonical", href: "https://caastowing.com/drivers" }],
   }),
   component: Drivers,
 });
