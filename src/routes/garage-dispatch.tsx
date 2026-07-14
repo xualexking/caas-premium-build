@@ -11,6 +11,9 @@ import { adminLogoutFn, checkAdminSession } from "@/lib/reviews";
 import { LayoutDashboard, Star, LogOut, Menu, X, ChevronRight, Image as ImageIcon } from "lucide-react";
 
 export const Route = createFileRoute("/garage-dispatch")({
+  head: () => ({
+    meta: [{ name: "robots", content: "noindex, nofollow" }],
+  }),
   // Check session on the server before rendering — eliminates the client spinner
   beforeLoad: async ({ location }) => {
     // Login page never needs an auth check
