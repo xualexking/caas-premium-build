@@ -1,2 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /garage-dispatch
+
+Sitemap: https://caastowing.com/sitemap.xml
