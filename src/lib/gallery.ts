@@ -12,6 +12,7 @@ export type GalleryItem = {
   location: string | null;
   layout: string;
   media_url: string;
+  media_type: "image" | "video";
   on_landing: boolean;
   display_order: number;
   created_at: string;
@@ -35,8 +36,8 @@ export const CATEGORY_OPTIONS = [
   "Other",
 ] as const;
 
-// ~4MB safety cap on encoded string (roughly 3MB image)
-const MAX_MEDIA_LEN = 4_500_000;
+// ~10MB safety cap on encoded string (roughly 7MB source file)
+const MAX_MEDIA_LEN = 10_000_000;
 
 const createSchema = z.object({
   title: z.string().min(2).max(160),
@@ -44,6 +45,7 @@ const createSchema = z.object({
   location: z.string().max(160).optional().nullable(),
   layout: z.string().max(32),
   media_url: z.string().min(20).max(MAX_MEDIA_LEN),
+  media_type: z.enum(["image", "video"]).optional().default("image"),
   on_landing: z.boolean().optional().default(false),
 });
 
@@ -59,13 +61,13 @@ export const listGallery = createServerFn({ method: "GET" })
     await ensureSchema();
     const rows = data.landingOnly
       ? await (sql as any)`
-          SELECT id, title, category, location, layout, media_url, on_landing, display_order, created_at
+          SELECT id, title, category, location, layout, media_url, media_type, on_landing, display_order, created_at
           FROM gallery_items
           WHERE on_landing = TRUE
           ORDER BY display_order ASC, created_at DESC
         `
       : await (sql as any)`
-          SELECT id, title, category, location, layout, media_url, on_landing, display_order, created_at
+          SELECT id, title, category, location, layout, media_url, media_type, on_landing, display_order, created_at
           FROM gallery_items
           ORDER BY display_order ASC, created_at DESC
         `;
@@ -79,7 +81,7 @@ export const adminListGallery = createServerFn({ method: "GET" }).handler(
     if (!authed) throw new Error("Unauthorized");
     await ensureSchema();
     const rows = await (sql as any)`
-      SELECT id, title, category, location, layout, media_url, on_landing, display_order, created_at
+      SELECT id, title, category, location, layout, media_url, media_type, on_landing, display_order, created_at
       FROM gallery_items
       ORDER BY display_order ASC, created_at DESC
     `;
@@ -95,8 +97,8 @@ export const createGalleryItem = createServerFn({ method: "POST" })
     if (!authed) throw new Error("Unauthorized");
     await ensureSchema();
     const rows = await (sql as any)`
-      INSERT INTO gallery_items (title, category, location, layout, media_url, on_landing)
-      VALUES (${data.title}, ${data.category}, ${data.location ?? null}, ${data.layout}, ${data.media_url}, ${data.on_landing ?? false})
+      INSERT INTO gallery_items (title, category, location, layout, media_url, media_type, on_landing)
+      VALUES (${data.title}, ${data.category}, ${data.location ?? null}, ${data.layout}, ${data.media_url}, ${data.media_type ?? "image"}, ${data.on_landing ?? false})
       RETURNING id
     `;
     return { ok: true, id: rows[0]?.id };
@@ -108,7 +110,7 @@ export const updateGalleryItem = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const authed = await getAdminSession();
     if (!authed) throw new Error("Unauthorized");
-    const { id, title, category, location, layout, media_url, on_landing } = data;
+    const { id, title, category, location, layout, media_url, media_type, on_landing } = data;
     await sql`
       UPDATE gallery_items SET
         title      = COALESCE(${title ?? null}, title),
@@ -116,6 +118,7 @@ export const updateGalleryItem = createServerFn({ method: "POST" })
         location   = COALESCE(${location ?? null}, location),
         layout     = COALESCE(${layout ?? null}, layout),
         media_url  = COALESCE(${media_url ?? null}, media_url),
+        media_type = COALESCE(${media_type ?? null}, media_type),
         on_landing = COALESCE(${on_landing ?? null}, on_landing)
       WHERE id = ${id}
     `;

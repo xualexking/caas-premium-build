@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import Autoplay from "embla-carousel-autoplay";
 import { useState, useEffect } from "react";
 import {
-  Truck, Wrench, Waves, BatteryCharging, Container, Zap, Package, Building2, ShieldCheck,
-  Clock, Users, Gauge, DollarSign, ArrowRight, PhoneCall, Star, CheckCircle2, Anchor,
+  Truck, Wrench, Container, Building2, ShieldCheck,
+  Clock, Users, Gauge, DollarSign, ArrowRight, PhoneCall, Star, CheckCircle2,
   Car, Shield, Boxes, Factory, Warehouse, HardHat, Hammer, Plug, Store, Ship, Building, Hotel, Cog,
   MessageSquarePlus,
 } from "lucide-react";
@@ -32,16 +32,24 @@ export const Route = createFileRoute("/")({
 });
 
 const services = [
-  { icon: Truck, title: "Vehicle Towing", desc: "Light-duty to heavy-duty towing for cars, SUVs, trucks, and vans." },
-  { icon: Container, title: "Heavy Equipment Transport", desc: "Excavators, loaders, and construction machinery hauling." },
-  { icon: Package, title: "Container Hauling", desc: "20ft and 40ft container pickup, delivery, and repositioning." },
-  { icon: Zap, title: "Generator Hauling", desc: "Safe transport of industrial generators of any size." },
-  { icon: Truck, title: "Freight Services", desc: "Reliable freight movement for time-critical shipments." },
-  { icon: Wrench, title: "Vehicle Recovery", desc: "Off-road, ditch, and rollover recovery with specialized equipment." },
-  { icon: Waves, title: "Flood Recovery", desc: "Rapid response to water-logged vehicles and equipment." },
-  { icon: BatteryCharging, title: "Roadside Assistance", desc: "Jump-starts, tire changes, lockouts and fuel delivery." },
-  { icon: Building2, title: "Commercial Fleet Support", desc: "Priority dispatch and dedicated accounts for fleet operators." },
-  { icon: Anchor, title: "Winch-Out & Off-Road Recovery", desc: "Bogged, ditched, or stuck off-road — we winch you back out." },
+  {
+    icon: Truck,
+    title: "Vehicle Towing",
+    desc: "Flatbed and wheel-lift towing for cars, SUVs, vans, and trucks — damage-free loading, insured drivers, and long-distance transport across Ghana.",
+    points: ["Flatbed & wheel-lift", "Damage-free loading", "Long-distance capable"],
+  },
+  {
+    icon: Container,
+    title: "Heavy Equipment & Container Transport",
+    desc: "Lowboy hauling for excavators, loaders, and forklifts, plus 20ft / 40ft container pickup, delivery, and yard repositioning with permitted loads.",
+    points: ["Lowboy trailers", "Permitted heavy loads", "Port & yard moves"],
+  },
+  {
+    icon: Wrench,
+    title: "Recovery & Roadside Assistance",
+    desc: "Ditch pulls, rollovers, flood recovery, jump-starts, tire changes, lockouts and fuel delivery — 24/7 emergency response with the right rigging.",
+    points: ["24/7 dispatch", "Winch & rigging", "Roadside fixes"],
+  },
 ];
 
 const steps = [
@@ -191,7 +199,19 @@ function Home() {
                   ? landingGallery.map((g) => (
                       <CarouselItem key={g.id} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                         <div className={`relative ${g.layout} w-full overflow-hidden border border-border bg-background flex items-end`}>
-                          <img src={g.media_url} alt={g.title} className="absolute inset-0 h-full w-full object-cover" />
+                          {g.media_type === "video" ? (
+                            <video
+                              src={g.media_url}
+                              className="absolute inset-0 h-full w-full object-cover"
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                              preload="metadata"
+                            />
+                          ) : (
+                            <img src={g.media_url} alt={g.title} className="absolute inset-0 h-full w-full object-cover" />
+                          )}
                           <div className="relative w-full p-5 bg-gradient-to-t from-background via-background/70 to-transparent">
                             <div className="text-xs uppercase tracking-widest text-primary">{g.category}</div>
                             <div className="font-heading uppercase tracking-wider mt-1">{g.title}</div>
@@ -230,14 +250,21 @@ function Home() {
               View all services <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-3 gap-4">
             {services.map((s) => (
-              <div key={s.title} className="group relative border border-border bg-background p-7 overflow-hidden hover:border-primary transition-all">
+              <div key={s.title} className="group relative border border-border bg-background p-8 overflow-hidden hover:border-primary transition-all flex flex-col">
                 <div className="absolute -top-10 -right-10 h-32 w-32 diag-stripes opacity-0 group-hover:opacity-10 transition-opacity" />
-                <s.icon className="h-8 w-8 text-primary" />
-                <h3 className="mt-5 font-heading uppercase tracking-wider text-lg">{s.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
-                <Link to="/services" className="mt-5 inline-flex items-center gap-2 text-xs uppercase tracking-wider text-primary opacity-80 group-hover:opacity-100 group-hover:gap-3 transition-all">
+                <s.icon className="h-10 w-10 text-primary" />
+                <h3 className="mt-6 font-heading uppercase tracking-wider text-xl">{s.title}</h3>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                <ul className="mt-5 space-y-2">
+                  {s.points.map((p) => (
+                    <li key={p} className="flex items-center gap-2 text-sm">
+                      <CheckCircle2 className="h-4 w-4 text-primary shrink-0" /> {p}
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/services" className="mt-6 inline-flex items-center gap-2 text-xs uppercase tracking-wider text-primary opacity-80 group-hover:opacity-100 group-hover:gap-3 transition-all">
                   Learn more <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
