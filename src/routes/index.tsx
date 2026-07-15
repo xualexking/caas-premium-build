@@ -32,16 +32,24 @@ export const Route = createFileRoute("/")({
 });
 
 const services = [
-  { icon: Truck, title: "Vehicle Towing", desc: "Light-duty to heavy-duty towing for cars, SUVs, trucks, and vans." },
-  { icon: Container, title: "Heavy Equipment Transport", desc: "Excavators, loaders, and construction machinery hauling." },
-  { icon: Package, title: "Container Hauling", desc: "20ft and 40ft container pickup, delivery, and repositioning." },
-  { icon: Zap, title: "Generator Hauling", desc: "Safe transport of industrial generators of any size." },
-  { icon: Truck, title: "Freight Services", desc: "Reliable freight movement for time-critical shipments." },
-  { icon: Wrench, title: "Vehicle Recovery", desc: "Off-road, ditch, and rollover recovery with specialized equipment." },
-  { icon: Waves, title: "Flood Recovery", desc: "Rapid response to water-logged vehicles and equipment." },
-  { icon: BatteryCharging, title: "Roadside Assistance", desc: "Jump-starts, tire changes, lockouts and fuel delivery." },
-  { icon: Building2, title: "Commercial Fleet Support", desc: "Priority dispatch and dedicated accounts for fleet operators." },
-  { icon: Anchor, title: "Winch-Out & Off-Road Recovery", desc: "Bogged, ditched, or stuck off-road — we winch you back out." },
+  {
+    icon: Truck,
+    title: "Vehicle Towing",
+    desc: "Flatbed and wheel-lift towing for cars, SUVs, vans, and trucks — damage-free loading, insured drivers, and long-distance transport across Ghana.",
+    points: ["Flatbed & wheel-lift", "Damage-free loading", "Long-distance capable"],
+  },
+  {
+    icon: Container,
+    title: "Heavy Equipment & Container Transport",
+    desc: "Lowboy hauling for excavators, loaders, and forklifts, plus 20ft / 40ft container pickup, delivery, and yard repositioning with permitted loads.",
+    points: ["Lowboy trailers", "Permitted heavy loads", "Port & yard moves"],
+  },
+  {
+    icon: Wrench,
+    title: "Recovery & Roadside Assistance",
+    desc: "Ditch pulls, rollovers, flood recovery, jump-starts, tire changes, lockouts and fuel delivery — 24/7 emergency response with the right rigging.",
+    points: ["24/7 dispatch", "Winch & rigging", "Roadside fixes"],
+  },
 ];
 
 const steps = [
