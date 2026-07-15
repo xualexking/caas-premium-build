@@ -241,11 +241,26 @@ function GalleryAdmin() {
           {items.map((it) => (
             <div key={it.id} className="border border-border bg-surface overflow-hidden group">
               <div className={`${it.layout} w-full bg-background relative overflow-hidden`}>
-                <img
-                  src={it.media_url}
-                  alt={it.title}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
+                {it.media_type === "video" ? (
+                  <video
+                    src={it.media_url}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    muted
+                    playsInline
+                    preload="metadata"
+                  />
+                ) : (
+                  <img
+                    src={it.media_url}
+                    alt={it.title}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                )}
+                {it.media_type === "video" && (
+                  <div className="absolute top-2 right-2 bg-background/80 text-foreground text-[10px] font-heading uppercase tracking-wider px-2 py-1">
+                    Video
+                  </div>
+                )}
                 {it.on_landing && (
                   <div className="absolute top-2 left-2 bg-primary text-primary-foreground text-[10px] font-heading uppercase tracking-wider px-2 py-1 flex items-center gap-1">
                     <Star className="h-3 w-3 fill-current" /> Landing
