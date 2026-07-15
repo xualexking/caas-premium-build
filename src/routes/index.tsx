@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import Autoplay from "embla-carousel-autoplay";
 import { useState, useEffect } from "react";
 import {
-  Truck, Wrench, Waves, BatteryCharging, Container, Zap, Package, Building2, ShieldCheck,
-  Clock, Users, Gauge, DollarSign, ArrowRight, PhoneCall, Star, CheckCircle2, Anchor,
+  Truck, Wrench, Container, Building2, ShieldCheck,
+  Clock, Users, Gauge, DollarSign, ArrowRight, PhoneCall, Star, CheckCircle2,
   Car, Shield, Boxes, Factory, Warehouse, HardHat, Hammer, Plug, Store, Ship, Building, Hotel, Cog,
   MessageSquarePlus,
 } from "lucide-react";
