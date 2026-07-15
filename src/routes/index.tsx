@@ -199,7 +199,19 @@ function Home() {
                   ? landingGallery.map((g) => (
                       <CarouselItem key={g.id} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                         <div className={`relative ${g.layout} w-full overflow-hidden border border-border bg-background flex items-end`}>
-                          <img src={g.media_url} alt={g.title} className="absolute inset-0 h-full w-full object-cover" />
+                          {g.media_type === "video" ? (
+                            <video
+                              src={g.media_url}
+                              className="absolute inset-0 h-full w-full object-cover"
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                              preload="metadata"
+                            />
+                          ) : (
+                            <img src={g.media_url} alt={g.title} className="absolute inset-0 h-full w-full object-cover" />
+                          )}
                           <div className="relative w-full p-5 bg-gradient-to-t from-background via-background/70 to-transparent">
                             <div className="text-xs uppercase tracking-widest text-primary">{g.category}</div>
                             <div className="font-heading uppercase tracking-wider mt-1">{g.title}</div>
