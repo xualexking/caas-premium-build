@@ -26,7 +26,8 @@ export const Route = createFileRoute("/garage-dispatch/gallery")({
   component: GalleryAdmin,
 });
 
-const MAX_FILE_BYTES = 3 * 1024 * 1024; // 3MB source
+const MAX_IMAGE_BYTES = 3 * 1024 * 1024; // 3MB image
+const MAX_VIDEO_BYTES = 7 * 1024 * 1024; // 7MB video
 
 function fileToDataUrl(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -44,6 +45,7 @@ type FormState = {
   location: string;
   layout: string;
   media_url: string;
+  media_type: "image" | "video";
   on_landing: boolean;
 };
 
@@ -53,6 +55,7 @@ const EMPTY_FORM: FormState = {
   location: "",
   layout: LAYOUT_OPTIONS[0].value,
   media_url: "",
+  media_type: "image",
   on_landing: false,
 };
 
