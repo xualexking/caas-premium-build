@@ -17,12 +17,12 @@ export const Route = createFileRoute("/gallery")({
 });
 
 const FALLBACK: GalleryItem[] = [
-  { id: -1, category: "Vehicle Towing", title: "Overnight highway tow", location: "I-95 corridor", layout: "aspect-[4/5]", media_url: "", on_landing: false, display_order: 0, created_at: "" },
-  { id: -2, category: "Recovery", title: "Ditch recovery — cargo van", location: "Rural route", layout: "aspect-square", media_url: "", on_landing: false, display_order: 0, created_at: "" },
-  { id: -3, category: "Heavy Equipment", title: "Excavator relocation", location: "Construction site", layout: "aspect-[3/4]", media_url: "", on_landing: false, display_order: 0, created_at: "" },
-  { id: -4, category: "Containers", title: "40ft container drop", location: "Port yard", layout: "aspect-[4/3]", media_url: "", on_landing: false, display_order: 0, created_at: "" },
-  { id: -5, category: "Freight", title: "Time-critical freight", location: "Cross-state", layout: "aspect-square", media_url: "", on_landing: false, display_order: 0, created_at: "" },
-  { id: -6, category: "Recovery", title: "Flood recovery — sedan", location: "Coastal district", layout: "aspect-[3/4]", media_url: "", on_landing: false, display_order: 0, created_at: "" },
+  { id: -1, category: "Vehicle Towing", title: "Overnight highway tow", location: "I-95 corridor", layout: "aspect-[4/5]", media_url: "", media_type: "image", on_landing: false, display_order: 0, created_at: "" },
+  { id: -2, category: "Recovery", title: "Ditch recovery — cargo van", location: "Rural route", layout: "aspect-square", media_url: "", media_type: "image", on_landing: false, display_order: 0, created_at: "" },
+  { id: -3, category: "Heavy Equipment", title: "Excavator relocation", location: "Construction site", layout: "aspect-[3/4]", media_url: "", media_type: "image", on_landing: false, display_order: 0, created_at: "" },
+  { id: -4, category: "Containers", title: "40ft container drop", location: "Port yard", layout: "aspect-[4/3]", media_url: "", media_type: "image", on_landing: false, display_order: 0, created_at: "" },
+  { id: -5, category: "Freight", title: "Time-critical freight", location: "Cross-state", layout: "aspect-square", media_url: "", media_type: "image", on_landing: false, display_order: 0, created_at: "" },
+  { id: -6, category: "Recovery", title: "Flood recovery — sedan", location: "Coastal district", layout: "aspect-[3/4]", media_url: "", media_type: "image", on_landing: false, display_order: 0, created_at: "" },
 ];
 
 
