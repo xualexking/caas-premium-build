@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
-const logoUrl = "/kobby.svg";
+const logoUrl = "/caas.svg";
 
 const nav = [
   { to: "/", label: "Home" },

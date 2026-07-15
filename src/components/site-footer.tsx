@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram } from "lucide-react";
-const logoUrl = "/kobby.svg";
+const logoUrl = "/caas.svg";
 
 export function SiteFooter() {
   return (

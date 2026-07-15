@@ -14,7 +14,7 @@ export const Route = createFileRoute("/garage-dispatch/login")({
   component: AdminLogin,
 });
 
-const logoUrl = "/kobby.svg";
+const logoUrl = "/caas.svg";
 
 function AdminLogin() {
   const [username, setUsername] = useState("");

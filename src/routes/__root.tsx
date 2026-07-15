@@ -8,10 +8,9 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { FloatingCall } from "@/components/floating-call";
@@ -33,9 +32,6 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
@@ -70,7 +66,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/kobby.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/caas.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/caas.svg", type: "image/svg+xml" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" },
@@ -85,7 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           url: "https://caastowing.com",
           telephone: "+233246773279",
           email: "dispatch@caastowing.com",
-          image: "https://caastowing.com/kobby.svg",
+          image: "https://caastowing.com/caas.svg",
           priceRange: "$$",
           areaServed: "GH",
           address: { "@type": "PostalAddress", addressCountry: "GH" },

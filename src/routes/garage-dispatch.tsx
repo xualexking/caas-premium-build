@@ -26,7 +26,7 @@ export const Route = createFileRoute("/garage-dispatch")({
   component: AdminLayout,
 });
 
-const logoUrl = "/kobby.svg";
+const logoUrl = "/caas.svg";
 
 const nav = [
   { to: "/garage-dispatch/reviews", label: "Reviews", icon: Star },

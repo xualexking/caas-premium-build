@@ -26,6 +26,9 @@ dist-ssr
 # Vercel build output
 .vercel/output/
 
+# Lovable project metadata
+.lovable/
+
 # Environment variables — never commit these
 .env
 .env.local
