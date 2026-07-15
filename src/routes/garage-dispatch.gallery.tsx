@@ -335,12 +335,16 @@ function GalleryAdmin() {
                   className={`relative w-full ${form.layout} border-2 border-dashed border-border hover:border-primary bg-background cursor-pointer overflow-hidden group transition-colors`}
                 >
                   {form.media_url ? (
-                    <img src={form.media_url} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                    form.media_type === "video" ? (
+                      <video src={form.media_url} className="absolute inset-0 h-full w-full object-cover" muted playsInline controls />
+                    ) : (
+                      <img src={form.media_url} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                    )
                   ) : (
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground">
                       <Upload className="h-8 w-8 mb-2" />
                       <div className="text-xs uppercase tracking-wider">Click to upload</div>
-                      <div className="text-[10px] mt-1">PNG · JPG · WEBP · max 3MB</div>
+                      <div className="text-[10px] mt-1">Image (max 3MB) · Video (max 7MB)</div>
                     </div>
                   )}
                   {form.media_url && (
@@ -352,7 +356,7 @@ function GalleryAdmin() {
                 <input
                   ref={fileRef}
                   type="file"
-                  accept="image/*"
+                  accept="image/*,video/*"
                   className="hidden"
                   onChange={(e) => {
                     const f = e.target.files?.[0];
