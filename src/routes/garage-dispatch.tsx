@@ -8,9 +8,12 @@ import {
 } from "@tanstack/react-router";
 import { useState } from "react";
 import { adminLogoutFn, checkAdminSession } from "@/lib/reviews";
-import { LayoutDashboard, Star, LogOut, Menu, X, ChevronRight } from "lucide-react";
+import { LayoutDashboard, Star, LogOut, Menu, X, ChevronRight, Image as ImageIcon } from "lucide-react";
 
 export const Route = createFileRoute("/garage-dispatch")({
+  head: () => ({
+    meta: [{ name: "robots", content: "noindex, nofollow" }],
+  }),
   // Check session on the server before rendering — eliminates the client spinner
   beforeLoad: async ({ location }) => {
     // Login page never needs an auth check
@@ -27,6 +30,7 @@ const logoUrl = "/kobby.svg";
 
 const nav = [
   { to: "/garage-dispatch/reviews", label: "Reviews", icon: Star },
+  { to: "/garage-dispatch/gallery", label: "Gallery", icon: ImageIcon },
 ];
 
 function AdminLayout() {

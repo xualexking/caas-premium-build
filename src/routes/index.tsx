@@ -15,15 +15,18 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { getApprovedReviews, type Review } from "@/lib/reviews";
+import { listGallery, type GalleryItem } from "@/lib/gallery";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "CAAS Towing & Recovery — 24/7 Heavy Duty Towing & Transport" },
+      { title: "CAAS Towing & Recovery — 24/7 Heavy Duty Towing & Transport in Ghana" },
       { name: "description", content: "24/7 emergency towing, heavy equipment transport, vehicle recovery, and commercial fleet support across Ghana. Fast dispatch. Trusted by drivers and fleets." },
       { property: "og:title", content: "CAAS Towing & Recovery — 24/7 Heavy Duty Towing" },
       { property: "og:description", content: "From cars to cargo — we move it all. Trusted across Ghana." },
+      { property: "og:url", content: "https://caastowing.com/" },
     ],
+    links: [{ rel: "canonical", href: "https://caastowing.com/" }],
   }),
   component: Home,
 });
@@ -89,11 +92,15 @@ const industries = [
 
 function Home() {
   const [reviews, setReviews] = useState<Review[]>(SEED_REVIEWS);
+  const [landingGallery, setLandingGallery] = useState<GalleryItem[]>([]);
 
   useEffect(() => {
     getApprovedReviews().then((rows) => {
       if (rows.length > 0) setReviews(rows);
     }).catch(() => {/* keep seed reviews on error */});
+    listGallery({ data: { landingOnly: true } })
+      .then((rows) => setLandingGallery(rows as GalleryItem[]))
+      .catch(() => {/* fallback to hardcoded slides */});
   }, []);
 
   return (
@@ -180,19 +187,31 @@ function Home() {
           <div className="mt-12">
             <Carousel plugins={[Autoplay({ delay: 4000, stopOnInteraction: false })]} opts={{ loop: true, align: "start" }} className="w-full">
               <CarouselContent className="-ml-4">
-                {gallerySlides.map((g) => (
-                  <CarouselItem key={g.label} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
-                    <div className={`relative aspect-[4/3] w-full overflow-hidden border border-border bg-gradient-to-br ${g.tone} hero-grid flex items-end`}>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="font-display text-6xl text-primary/30">CAAS</div>
-                      </div>
-                      <div className="relative w-full p-5 bg-gradient-to-t from-background via-background/70 to-transparent">
-                        <div className="text-xs uppercase tracking-widest text-primary">On the Job</div>
-                        <div className="font-heading uppercase tracking-wider mt-1">{g.label}</div>
-                      </div>
-                    </div>
-                  </CarouselItem>
-                ))}
+                {landingGallery.length > 0
+                  ? landingGallery.map((g) => (
+                      <CarouselItem key={g.id} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+                        <div className={`relative ${g.layout} w-full overflow-hidden border border-border bg-background flex items-end`}>
+                          <img src={g.media_url} alt={g.title} className="absolute inset-0 h-full w-full object-cover" />
+                          <div className="relative w-full p-5 bg-gradient-to-t from-background via-background/70 to-transparent">
+                            <div className="text-xs uppercase tracking-widest text-primary">{g.category}</div>
+                            <div className="font-heading uppercase tracking-wider mt-1">{g.title}</div>
+                          </div>
+                        </div>
+                      </CarouselItem>
+                    ))
+                  : gallerySlides.map((g) => (
+                      <CarouselItem key={g.label} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+                        <div className={`relative aspect-[4/3] w-full overflow-hidden border border-border bg-gradient-to-br ${g.tone} hero-grid flex items-end`}>
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="font-display text-6xl text-primary/30">CAAS</div>
+                          </div>
+                          <div className="relative w-full p-5 bg-gradient-to-t from-background via-background/70 to-transparent">
+                            <div className="text-xs uppercase tracking-widest text-primary">On the Job</div>
+                            <div className="font-heading uppercase tracking-wider mt-1">{g.label}</div>
+                          </div>
+                        </div>
+                      </CarouselItem>
+                    ))}
               </CarouselContent>
             </Carousel>
           </div>

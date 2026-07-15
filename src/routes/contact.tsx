@@ -4,11 +4,13 @@ import { Phone, Mail, MessageCircle, MapPin, Clock } from "lucide-react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — CAAS Towing & Recovery" },
-      { name: "description", content: "Reach CAAS Towing & Recovery 24/7 by phone, email, or WhatsApp. Emergency dispatch always on." },
+      { title: "Contact CAAS Towing & Recovery — 24/7 Dispatch in Ghana" },
+      { name: "description", content: "Reach CAAS Towing & Recovery 24/7 by phone, email, or WhatsApp. Emergency dispatch always on. Call +233 24 677 3279." },
       { property: "og:title", content: "Contact CAAS Towing & Recovery" },
-      { property: "og:description", content: "Reach dispatch 24/7." },
+      { property: "og:description", content: "Reach dispatch 24/7 by phone, email, or WhatsApp." },
+      { property: "og:url", content: "https://caastowing.com/contact" },
     ],
+    links: [{ rel: "canonical", href: "https://caastowing.com/contact" }],
   }),
   component: Contact,
 });
