@@ -127,7 +127,7 @@ function GalleryAdmin() {
       return;
     }
     if (!form.media_url) {
-      setError("Please upload an image.");
+      setError("Please upload an image or video.");
       return;
     }
     setSaving(true);
@@ -141,6 +141,7 @@ function GalleryAdmin() {
             location: form.location || null,
             layout: form.layout,
             media_url: form.media_url,
+            media_type: form.media_type,
             on_landing: form.on_landing,
           },
         });
@@ -152,6 +153,7 @@ function GalleryAdmin() {
             location: form.location || null,
             layout: form.layout,
             media_url: form.media_url,
+            media_type: form.media_type,
             on_landing: form.on_landing,
           },
         });
