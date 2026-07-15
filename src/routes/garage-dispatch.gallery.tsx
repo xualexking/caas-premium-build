@@ -96,6 +96,7 @@ function GalleryAdmin() {
       location: item.location ?? "",
       layout: item.layout,
       media_url: item.media_url,
+      media_type: item.media_type ?? "image",
       on_landing: item.on_landing,
     });
     setError("");
@@ -104,16 +105,19 @@ function GalleryAdmin() {
 
   const handleFile = async (file: File) => {
     setError("");
-    if (!file.type.startsWith("image/")) {
-      setError("Please choose an image file.");
+    const isImage = file.type.startsWith("image/");
+    const isVideo = file.type.startsWith("video/");
+    if (!isImage && !isVideo) {
+      setError("Please choose an image or video file.");
       return;
     }
-    if (file.size > MAX_FILE_BYTES) {
-      setError("Image too large. Max 3MB.");
+    const limit = isVideo ? MAX_VIDEO_BYTES : MAX_IMAGE_BYTES;
+    if (file.size > limit) {
+      setError(isVideo ? "Video too large. Max 7MB." : "Image too large. Max 3MB.");
       return;
     }
     const dataUrl = await fileToDataUrl(file);
-    setForm((f) => ({ ...f, media_url: dataUrl }));
+    setForm((f) => ({ ...f, media_url: dataUrl, media_type: isVideo ? "video" : "image" }));
   };
 
   const handleSave = async () => {
