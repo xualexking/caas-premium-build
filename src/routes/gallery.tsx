@@ -85,7 +85,17 @@ function Gallery() {
                 <div key={it.id} className="break-inside-avoid group relative overflow-hidden border border-border bg-surface">
                   <div className={`${it.layout} w-full relative bg-gradient-to-br from-surface-elevated to-background flex items-center justify-center`}>
                     {it.media_url ? (
-                      <img src={it.media_url} alt={it.title} className="absolute inset-0 h-full w-full object-cover" />
+                      it.media_type === "video" ? (
+                        <video
+                          src={it.media_url}
+                          className="absolute inset-0 h-full w-full object-cover"
+                          controls
+                          playsInline
+                          preload="metadata"
+                        />
+                      ) : (
+                        <img src={it.media_url} alt={it.title} className="absolute inset-0 h-full w-full object-cover" />
+                      )
                     ) : (
                       <div className="hero-grid absolute inset-0 flex items-center justify-center">
                         <div className="font-display text-6xl text-primary/20">CAAS</div>
