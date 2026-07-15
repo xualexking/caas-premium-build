@@ -51,11 +51,14 @@ export async function ensureSchema() {
       location      VARCHAR(160),
       layout        VARCHAR(32)  NOT NULL DEFAULT 'aspect-[4/3]',
       media_url     TEXT         NOT NULL,
+      media_type    VARCHAR(16)  NOT NULL DEFAULT 'image',
       on_landing    BOOLEAN      NOT NULL DEFAULT FALSE,
       display_order INTEGER      NOT NULL DEFAULT 0,
       created_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW()
     )
   `;
+  // Backfill for existing installs
+  await sql`ALTER TABLE gallery_items ADD COLUMN IF NOT EXISTS media_type VARCHAR(16) NOT NULL DEFAULT 'image'`;
   await sql`CREATE INDEX IF NOT EXISTS idx_gallery_landing ON gallery_items(on_landing)`;
   await sql`CREATE INDEX IF NOT EXISTS idx_gallery_order ON gallery_items(display_order)`;
 

@@ -17,12 +17,12 @@ export const Route = createFileRoute("/gallery")({
 });
 
 const FALLBACK: GalleryItem[] = [
-  { id: -1, category: "Vehicle Towing", title: "Overnight highway tow", location: "I-95 corridor", layout: "aspect-[4/5]", media_url: "", on_landing: false, display_order: 0, created_at: "" },
-  { id: -2, category: "Recovery", title: "Ditch recovery — cargo van", location: "Rural route", layout: "aspect-square", media_url: "", on_landing: false, display_order: 0, created_at: "" },
-  { id: -3, category: "Heavy Equipment", title: "Excavator relocation", location: "Construction site", layout: "aspect-[3/4]", media_url: "", on_landing: false, display_order: 0, created_at: "" },
-  { id: -4, category: "Containers", title: "40ft container drop", location: "Port yard", layout: "aspect-[4/3]", media_url: "", on_landing: false, display_order: 0, created_at: "" },
-  { id: -5, category: "Freight", title: "Time-critical freight", location: "Cross-state", layout: "aspect-square", media_url: "", on_landing: false, display_order: 0, created_at: "" },
-  { id: -6, category: "Recovery", title: "Flood recovery — sedan", location: "Coastal district", layout: "aspect-[3/4]", media_url: "", on_landing: false, display_order: 0, created_at: "" },
+  { id: -1, category: "Vehicle Towing", title: "Overnight highway tow", location: "I-95 corridor", layout: "aspect-[4/5]", media_url: "", media_type: "image", on_landing: false, display_order: 0, created_at: "" },
+  { id: -2, category: "Recovery", title: "Ditch recovery — cargo van", location: "Rural route", layout: "aspect-square", media_url: "", media_type: "image", on_landing: false, display_order: 0, created_at: "" },
+  { id: -3, category: "Heavy Equipment", title: "Excavator relocation", location: "Construction site", layout: "aspect-[3/4]", media_url: "", media_type: "image", on_landing: false, display_order: 0, created_at: "" },
+  { id: -4, category: "Containers", title: "40ft container drop", location: "Port yard", layout: "aspect-[4/3]", media_url: "", media_type: "image", on_landing: false, display_order: 0, created_at: "" },
+  { id: -5, category: "Freight", title: "Time-critical freight", location: "Cross-state", layout: "aspect-square", media_url: "", media_type: "image", on_landing: false, display_order: 0, created_at: "" },
+  { id: -6, category: "Recovery", title: "Flood recovery — sedan", location: "Coastal district", layout: "aspect-[3/4]", media_url: "", media_type: "image", on_landing: false, display_order: 0, created_at: "" },
 ];
 
 
@@ -85,7 +85,17 @@ function Gallery() {
                 <div key={it.id} className="break-inside-avoid group relative overflow-hidden border border-border bg-surface">
                   <div className={`${it.layout} w-full relative bg-gradient-to-br from-surface-elevated to-background flex items-center justify-center`}>
                     {it.media_url ? (
-                      <img src={it.media_url} alt={it.title} className="absolute inset-0 h-full w-full object-cover" />
+                      it.media_type === "video" ? (
+                        <video
+                          src={it.media_url}
+                          className="absolute inset-0 h-full w-full object-cover"
+                          controls
+                          playsInline
+                          preload="metadata"
+                        />
+                      ) : (
+                        <img src={it.media_url} alt={it.title} className="absolute inset-0 h-full w-full object-cover" />
+                      )
                     ) : (
                       <div className="hero-grid absolute inset-0 flex items-center justify-center">
                         <div className="font-display text-6xl text-primary/20">CAAS</div>

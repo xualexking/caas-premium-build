@@ -26,7 +26,8 @@ export const Route = createFileRoute("/garage-dispatch/gallery")({
   component: GalleryAdmin,
 });
 
-const MAX_FILE_BYTES = 3 * 1024 * 1024; // 3MB source
+const MAX_IMAGE_BYTES = 3 * 1024 * 1024; // 3MB image
+const MAX_VIDEO_BYTES = 7 * 1024 * 1024; // 7MB video
 
 function fileToDataUrl(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -44,6 +45,7 @@ type FormState = {
   location: string;
   layout: string;
   media_url: string;
+  media_type: "image" | "video";
   on_landing: boolean;
 };
 
@@ -53,6 +55,7 @@ const EMPTY_FORM: FormState = {
   location: "",
   layout: LAYOUT_OPTIONS[0].value,
   media_url: "",
+  media_type: "image",
   on_landing: false,
 };
 
@@ -93,6 +96,7 @@ function GalleryAdmin() {
       location: item.location ?? "",
       layout: item.layout,
       media_url: item.media_url,
+      media_type: item.media_type ?? "image",
       on_landing: item.on_landing,
     });
     setError("");
@@ -101,16 +105,19 @@ function GalleryAdmin() {
 
   const handleFile = async (file: File) => {
     setError("");
-    if (!file.type.startsWith("image/")) {
-      setError("Please choose an image file.");
+    const isImage = file.type.startsWith("image/");
+    const isVideo = file.type.startsWith("video/");
+    if (!isImage && !isVideo) {
+      setError("Please choose an image or video file.");
       return;
     }
-    if (file.size > MAX_FILE_BYTES) {
-      setError("Image too large. Max 3MB.");
+    const limit = isVideo ? MAX_VIDEO_BYTES : MAX_IMAGE_BYTES;
+    if (file.size > limit) {
+      setError(isVideo ? "Video too large. Max 7MB." : "Image too large. Max 3MB.");
       return;
     }
     const dataUrl = await fileToDataUrl(file);
-    setForm((f) => ({ ...f, media_url: dataUrl }));
+    setForm((f) => ({ ...f, media_url: dataUrl, media_type: isVideo ? "video" : "image" }));
   };
 
   const handleSave = async () => {
@@ -120,7 +127,7 @@ function GalleryAdmin() {
       return;
     }
     if (!form.media_url) {
-      setError("Please upload an image.");
+      setError("Please upload an image or video.");
       return;
     }
     setSaving(true);
@@ -134,6 +141,7 @@ function GalleryAdmin() {
             location: form.location || null,
             layout: form.layout,
             media_url: form.media_url,
+            media_type: form.media_type,
             on_landing: form.on_landing,
           },
         });
@@ -145,6 +153,7 @@ function GalleryAdmin() {
             location: form.location || null,
             layout: form.layout,
             media_url: form.media_url,
+            media_type: form.media_type,
             on_landing: form.on_landing,
           },
         });
@@ -232,11 +241,26 @@ function GalleryAdmin() {
           {items.map((it) => (
             <div key={it.id} className="border border-border bg-surface overflow-hidden group">
               <div className={`${it.layout} w-full bg-background relative overflow-hidden`}>
-                <img
-                  src={it.media_url}
-                  alt={it.title}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
+                {it.media_type === "video" ? (
+                  <video
+                    src={it.media_url}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    muted
+                    playsInline
+                    preload="metadata"
+                  />
+                ) : (
+                  <img
+                    src={it.media_url}
+                    alt={it.title}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                )}
+                {it.media_type === "video" && (
+                  <div className="absolute top-2 right-2 bg-background/80 text-foreground text-[10px] font-heading uppercase tracking-wider px-2 py-1">
+                    Video
+                  </div>
+                )}
                 {it.on_landing && (
                   <div className="absolute top-2 left-2 bg-primary text-primary-foreground text-[10px] font-heading uppercase tracking-wider px-2 py-1 flex items-center gap-1">
                     <Star className="h-3 w-3 fill-current" /> Landing
@@ -311,12 +335,16 @@ function GalleryAdmin() {
                   className={`relative w-full ${form.layout} border-2 border-dashed border-border hover:border-primary bg-background cursor-pointer overflow-hidden group transition-colors`}
                 >
                   {form.media_url ? (
-                    <img src={form.media_url} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                    form.media_type === "video" ? (
+                      <video src={form.media_url} className="absolute inset-0 h-full w-full object-cover" muted playsInline controls />
+                    ) : (
+                      <img src={form.media_url} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                    )
                   ) : (
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground">
                       <Upload className="h-8 w-8 mb-2" />
                       <div className="text-xs uppercase tracking-wider">Click to upload</div>
-                      <div className="text-[10px] mt-1">PNG · JPG · WEBP · max 3MB</div>
+                      <div className="text-[10px] mt-1">Image (max 3MB) · Video (max 7MB)</div>
                     </div>
                   )}
                   {form.media_url && (
@@ -328,7 +356,7 @@ function GalleryAdmin() {
                 <input
                   ref={fileRef}
                   type="file"
-                  accept="image/*"
+                  accept="image/*,video/*"
                   className="hidden"
                   onChange={(e) => {
                     const f = e.target.files?.[0];
