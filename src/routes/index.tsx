@@ -250,14 +250,21 @@ function Home() {
               View all services <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-3 gap-4">
             {services.map((s) => (
-              <div key={s.title} className="group relative border border-border bg-background p-7 overflow-hidden hover:border-primary transition-all">
+              <div key={s.title} className="group relative border border-border bg-background p-8 overflow-hidden hover:border-primary transition-all flex flex-col">
                 <div className="absolute -top-10 -right-10 h-32 w-32 diag-stripes opacity-0 group-hover:opacity-10 transition-opacity" />
-                <s.icon className="h-8 w-8 text-primary" />
-                <h3 className="mt-5 font-heading uppercase tracking-wider text-lg">{s.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
-                <Link to="/services" className="mt-5 inline-flex items-center gap-2 text-xs uppercase tracking-wider text-primary opacity-80 group-hover:opacity-100 group-hover:gap-3 transition-all">
+                <s.icon className="h-10 w-10 text-primary" />
+                <h3 className="mt-6 font-heading uppercase tracking-wider text-xl">{s.title}</h3>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                <ul className="mt-5 space-y-2">
+                  {s.points.map((p) => (
+                    <li key={p} className="flex items-center gap-2 text-sm">
+                      <CheckCircle2 className="h-4 w-4 text-primary shrink-0" /> {p}
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/services" className="mt-6 inline-flex items-center gap-2 text-xs uppercase tracking-wider text-primary opacity-80 group-hover:opacity-100 group-hover:gap-3 transition-all">
                   Learn more <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
