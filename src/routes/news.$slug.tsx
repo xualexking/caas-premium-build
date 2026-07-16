@@ -73,7 +73,7 @@ function NotFoundPost() {
 
 function NewsDetail() {
   const { post } = Route.useLoaderData();
-  const paragraphs = post.body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+  const paragraphs = post.body.split(/\n{2,}/).map((p: string) => p.trim()).filter(Boolean);
 
   return (
     <>
@@ -119,7 +119,7 @@ function NewsDetail() {
       <section className="pb-24">
         <div className="container-x max-w-3xl">
           <article className="prose-invert">
-            {paragraphs.map((para, i) => (
+            {paragraphs.map((para: string, i: number) => (
               <p
                 key={i}
                 className="text-base md:text-lg leading-relaxed text-foreground/90 mb-6 whitespace-pre-wrap"
