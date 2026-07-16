@@ -18,6 +18,7 @@ import { Route as DriversRouteImport } from './routes/drivers'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SitemapXmlRouteImport } from './routes/sitemap.xml'
 import { Route as GarageDispatchReviewsRouteImport } from './routes/garage-dispatch.reviews'
 import { Route as GarageDispatchLoginRouteImport } from './routes/garage-dispatch.login'
 import { Route as GarageDispatchGalleryRouteImport } from './routes/garage-dispatch.gallery'
@@ -67,6 +68,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapXmlRoute = SitemapXmlRouteImport.update({
+  id: '/sitemap/xml',
+  path: '/sitemap/xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GarageDispatchReviewsRoute = GarageDispatchReviewsRouteImport.update({
   id: '/reviews',
   path: '/reviews',
@@ -96,6 +102,7 @@ export interface FileRoutesByFullPath {
   '/garage-dispatch/gallery': typeof GarageDispatchGalleryRoute
   '/garage-dispatch/login': typeof GarageDispatchLoginRoute
   '/garage-dispatch/reviews': typeof GarageDispatchReviewsRoute
+  '/sitemap/xml': typeof SitemapXmlRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByTo {
   '/garage-dispatch/gallery': typeof GarageDispatchGalleryRoute
   '/garage-dispatch/login': typeof GarageDispatchLoginRoute
   '/garage-dispatch/reviews': typeof GarageDispatchReviewsRoute
+  '/sitemap/xml': typeof SitemapXmlRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -125,6 +133,7 @@ export interface FileRoutesById {
   '/garage-dispatch/gallery': typeof GarageDispatchGalleryRoute
   '/garage-dispatch/login': typeof GarageDispatchLoginRoute
   '/garage-dispatch/reviews': typeof GarageDispatchReviewsRoute
+  '/sitemap/xml': typeof SitemapXmlRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/garage-dispatch/gallery'
     | '/garage-dispatch/login'
     | '/garage-dispatch/reviews'
+    | '/sitemap/xml'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
     | '/garage-dispatch/gallery'
     | '/garage-dispatch/login'
     | '/garage-dispatch/reviews'
+    | '/sitemap/xml'
   id:
     | '__root__'
     | '/'
@@ -169,6 +180,7 @@ export interface FileRouteTypes {
     | '/garage-dispatch/gallery'
     | '/garage-dispatch/login'
     | '/garage-dispatch/reviews'
+    | '/sitemap/xml'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -181,6 +193,7 @@ export interface RootRouteChildren {
   RequestRoute: typeof RequestRoute
   ServicesRoute: typeof ServicesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SitemapXmlRoute: typeof SitemapXmlRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -248,6 +261,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap/xml': {
+      id: '/sitemap/xml'
+      path: '/sitemap/xml'
+      fullPath: '/sitemap/xml'
+      preLoaderRoute: typeof SitemapXmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/garage-dispatch/reviews': {
       id: '/garage-dispatch/reviews'
       path: '/reviews'
@@ -298,6 +318,7 @@ const rootRouteChildren: RootRouteChildren = {
   RequestRoute: RequestRoute,
   ServicesRoute: ServicesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SitemapXmlRoute: SitemapXmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

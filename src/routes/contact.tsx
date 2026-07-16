@@ -4,11 +4,13 @@ import { Phone, Mail, MessageCircle, MapPin, Clock } from "lucide-react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact CAAS Towing & Recovery — 24/7 Dispatch in Ghana" },
-      { name: "description", content: "Reach CAAS Towing & Recovery 24/7 by phone, email, or WhatsApp. Emergency dispatch always on. Call +233 24 677 3279." },
-      { property: "og:title", content: "Contact CAAS Towing & Recovery" },
-      { property: "og:description", content: "Reach dispatch 24/7 by phone, email, or WhatsApp." },
+      { title: "Contact CAAS Towing — 24/7 Emergency Dispatch in Ghana" },
+      { name: "description", content: "Call CAAS Towing & Recovery 24/7 for emergency towing, recovery and heavy transport in Ghana. Phone: +233 24 677 3279. Fast dispatch, real people." },
+      { property: "og:title", content: "Contact CAAS Towing & Recovery — 24/7 Ghana" },
+      { property: "og:description", content: "24/7 emergency dispatch. Call +233 24 677 3279 or WhatsApp for fast towing and recovery across Ghana." },
       { property: "og:url", content: "https://caastowing.com/contact" },
+      { property: "og:image", content: "https://caastowing.com/og-image.jpg" },
+      { name: "twitter:image", content: "https://caastowing.com/og-image.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://caastowing.com/contact" }],
   }),
@@ -21,8 +23,8 @@ function Contact() {
       <section className="pt-40 pb-12 border-b border-border">
         <div className="container-x">
           <div className="text-xs uppercase tracking-[0.3em] text-primary mb-4">Contact</div>
-          <h1 className="font-display text-6xl md:text-8xl leading-[0.9]">Get in <span className="text-primary">touch.</span></h1>
-          <p className="mt-4 text-muted-foreground text-lg max-w-2xl">Dispatch is on the line 24 hours a day. Pick your channel.</p>
+          <h1 className="font-display text-6xl md:text-8xl leading-[0.9]">Call <span className="text-primary">Towing</span> & Recovery Dispatch.</h1>
+          <p className="mt-4 text-muted-foreground text-lg max-w-2xl">Emergency towing and recovery dispatch is on the line 24 hours a day, 7 days a week.</p>
         </div>
       </section>
 

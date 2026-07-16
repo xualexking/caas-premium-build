@@ -5,11 +5,13 @@ import { listGallery, type GalleryItem } from "@/lib/gallery";
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
-      { title: "Gallery — Recent Towing & Recovery Jobs | CAAS" },
-      { name: "description", content: "Recent CAAS Towing & Recovery jobs: vehicle recoveries, heavy equipment transports, container moves, and commercial fleet support across Ghana." },
-      { property: "og:title", content: "Gallery — CAAS Towing & Recovery" },
-      { property: "og:description", content: "Recent recovery, transport, and towing work." },
+      { title: "Towing & Recovery Gallery — CAAS Jobs Across Ghana" },
+      { name: "description", content: "See CAAS Towing & Recovery in action — vehicle recoveries, heavy equipment transport, container moves, flood recovery, and commercial fleet support across Ghana." },
+      { property: "og:title", content: "Towing & Recovery Gallery — CAAS Ghana" },
+      { property: "og:description", content: "Recent towing, recovery, and heavy transport jobs by CAAS across Ghana." },
       { property: "og:url", content: "https://caastowing.com/gallery" },
+      { property: "og:image", content: "https://caastowing.com/og-image.jpg" },
+      { name: "twitter:image", content: "https://caastowing.com/og-image.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://caastowing.com/gallery" }],
   }),
@@ -54,7 +56,7 @@ function Gallery() {
         <div className="container-x">
           <div className="text-xs uppercase tracking-[0.3em] text-primary mb-4">Gallery</div>
           <h1 className="font-display text-6xl md:text-8xl leading-[0.9]">
-            Recent <span className="text-primary">jobs</span> from the road.
+            Towing & Recovery <span className="text-primary">Jobs</span> Across Ghana.
           </h1>
         </div>
       </section>

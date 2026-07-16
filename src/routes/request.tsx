@@ -5,11 +5,13 @@ import { ArrowRight, ArrowLeft, CheckCircle2, MessageCircle, Mail, Info, Upload,
 export const Route = createFileRoute("/request")({
   head: () => ({
     meta: [
-      { title: "Request a Tow or Recovery Quote | CAAS Towing" },
-      { name: "description", content: "Request a towing, recovery, or heavy transport quote from CAAS Towing & Recovery. Fast response by email or WhatsApp — 24/7 dispatch across Ghana." },
-      { property: "og:title", content: "Request Service — CAAS Towing & Recovery" },
-      { property: "og:description", content: "Get a fast quote by email or WhatsApp." },
+      { title: "Request Towing or Recovery in Ghana | CAAS" },
+      { name: "description", content: "Request a towing, recovery, or heavy transport quote from CAAS. 24/7 dispatch across Ghana — fast response by WhatsApp or email. Get a quote in minutes." },
+      { property: "og:title", content: "Request Towing or Recovery — CAAS Ghana" },
+      { property: "og:description", content: "Get a fast towing or recovery quote — 24/7 dispatch across Ghana by WhatsApp or email." },
       { property: "og:url", content: "https://caastowing.com/request" },
+      { property: "og:image", content: "https://caastowing.com/og-image.jpg" },
+      { name: "twitter:image", content: "https://caastowing.com/og-image.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://caastowing.com/request" }],
   }),

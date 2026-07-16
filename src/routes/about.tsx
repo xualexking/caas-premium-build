@@ -5,11 +5,13 @@ import logo from "@/assets/caas-logo.asset.json";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About CAAS Towing & Recovery — Ghana's Trusted Towing Team" },
+      { title: "About CAAS Towing — Ghana's Trusted Towing & Recovery Team" },
       { name: "description", content: "The story, mission, and values behind CAAS Towing & Recovery — a professional heavy-duty towing and recovery team trusted by drivers and fleets across Ghana." },
       { property: "og:title", content: "About CAAS Towing & Recovery" },
-      { property: "og:description", content: "Our story, mission, and values." },
+      { property: "og:description", content: "Professional heavy-duty towing and recovery team trusted across Ghana." },
       { property: "og:url", content: "https://caastowing.com/about" },
+      { property: "og:image", content: "https://caastowing.com/og-image.jpg" },
+      { name: "twitter:image", content: "https://caastowing.com/og-image.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://caastowing.com/about" }],
   }),
@@ -24,7 +26,7 @@ function About() {
           <div>
             <div className="text-xs uppercase tracking-[0.3em] text-primary mb-4">About CAAS</div>
             <h1 className="font-display text-6xl md:text-8xl leading-[0.9]">
-              Built on <span className="text-primary">grit</span>. Run on <span className="text-primary">trust</span>.
+              Ghana's Trusted <span className="text-primary">Towing</span> & Recovery Team.
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
               CAAS Towing &amp; Recovery is a full-service towing and heavy recovery outfit. We started with one truck and one promise — show up fast, do the job right, treat people well. That promise still runs everything we do.
