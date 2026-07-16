@@ -10,6 +10,7 @@ const getSitemap = createServerFn({ method: "GET" }).handler(async () => {
     { loc: `${base}/services`, priority: "0.9", changefreq: "monthly" },
     { loc: `${base}/about`, priority: "0.7", changefreq: "monthly" },
     { loc: `${base}/gallery`, priority: "0.7", changefreq: "weekly" },
+    { loc: `${base}/news`, priority: "0.8", changefreq: "weekly" },
     { loc: `${base}/contact`, priority: "0.8", changefreq: "monthly" },
     { loc: `${base}/request`, priority: "0.9", changefreq: "monthly" },
   ];
