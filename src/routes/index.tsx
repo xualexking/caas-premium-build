@@ -119,9 +119,9 @@ function Home() {
       <section className="relative min-h-[100vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
           <img src={hero} alt="Heavy duty tow truck on highway at night" className="h-full w-full object-cover" width={1920} height={1280} />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50" />
-          <div className="absolute inset-0 hero-grid opacity-30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-background/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-background/30" />
+          <div className="absolute inset-0 hero-grid opacity-15" />
         </div>
 
         <div className="container-x relative z-10 pt-32 pb-20">
