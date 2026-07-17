@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Target, Eye, Award } from "lucide-react";
-import logo from "@/assets/caas-logo.asset.json";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -32,7 +31,7 @@ function About() {
               CAAS Towing &amp; Recovery is a full-service towing and heavy recovery outfit. We started with one truck and one promise — show up fast, do the job right, treat people well. That promise still runs everything we do.
             </p>
           </div>
-          <img src={logo.url} alt="CAAS" className="h-48 w-48 justify-self-end rounded-2xl object-cover shadow-hard" />
+          <img src="/caas.svg" alt="CAAS" className="h-48 w-48 justify-self-end rounded-2xl object-cover shadow-hard" />
         </div>
       </section>
 

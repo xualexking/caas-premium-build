@@ -8,7 +8,6 @@ import {
   MessageSquarePlus,
 } from "lucide-react";
 import hero from "@/assets/hero-truck.jpg";
-import logo from "@/assets/caas-logo.asset.json";
 import {
   Carousel,
   CarouselContent,
@@ -151,7 +150,7 @@ function Home() {
         </div>
 
         <div className="hidden lg:block absolute right-8 bottom-8 z-10">
-          <img src={logo.url} alt="" className="h-32 w-32 rounded-xl object-cover opacity-90 shadow-hard" />
+          <img src="/caas.svg" alt="" className="h-32 w-32 rounded-xl object-cover opacity-90 shadow-hard" />
         </div>
       </section>
 
