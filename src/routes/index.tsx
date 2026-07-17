@@ -361,7 +361,7 @@ function Home() {
                   Talk to a real dispatcher within minutes. Any vehicle, any equipment, any hour.
                 </p>
                 <ul className="mt-6 grid sm:grid-cols-2 gap-2 text-sm">
-                  {["No dispatch delays", "Transparent pricing", "Fully insured", "Nationwide network"].map((f) => (
+                  {["No dispatch delays", "Transparent pricing", "Nationwide network"].map((f) => (
                     <li key={f} className="flex items-center gap-2 text-foreground/80">
                       <CheckCircle2 className="h-4 w-4 text-primary" /> {f}
                     </li>

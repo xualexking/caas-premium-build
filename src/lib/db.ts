@@ -79,6 +79,15 @@ export async function ensureSchema() {
   `;
   await sql`CREATE INDEX IF NOT EXISTS idx_news_published ON news_posts(published, published_at DESC)`;
 
+
+  // Service cover images (keyed by service slug)
+  await sql`
+    CREATE TABLE IF NOT EXISTS service_covers (
+      slug       VARCHAR(120) PRIMARY KEY,
+      cover_url  TEXT NOT NULL,
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `;
   // Seed the default admin user if none exists
   // Password: Dispatch@CAAS#2026!  (SHA-256 of password + SESSION_SECRET)
   await sql`

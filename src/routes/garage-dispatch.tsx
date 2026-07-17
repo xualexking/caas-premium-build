@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { useState } from "react";
 import { adminLogoutFn, checkAdminSession } from "@/lib/reviews";
-import { LayoutDashboard, Star, LogOut, Menu, X, ChevronRight, Image as ImageIcon, Newspaper } from "lucide-react";
+import { LayoutDashboard, Star, LogOut, Menu, X, ChevronRight, Image as ImageIcon, Newspaper, Wrench } from "lucide-react";
 
 export const Route = createFileRoute("/garage-dispatch")({
   head: () => ({
@@ -31,6 +31,7 @@ const logoUrl = "/caas.svg";
 const nav = [
   { to: "/garage-dispatch/reviews", label: "Reviews", icon: Star },
   { to: "/garage-dispatch/gallery", label: "Gallery", icon: ImageIcon },
+  { to: "/garage-dispatch/services", label: "Services", icon: Wrench },
   { to: "/garage-dispatch/news", label: "News", icon: Newspaper },
 ];
 

@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { Truck, Wrench, Waves, BatteryCharging, Container, Zap, Package, Building2, Anchor, ArrowRight, CheckCircle2, PhoneCall, Clock, ShieldCheck } from "lucide-react";
+import { getServiceCovers } from "@/lib/services";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -18,6 +20,7 @@ export const Route = createFileRoute("/services")({
 });
 
 type Service = {
+  slug: string;
   icon: typeof Truck;
   title: string;
   tagline: string;
@@ -29,6 +32,7 @@ type Service = {
 
 const list: Service[] = [
   {
+    slug: "vehicle-towing",
     icon: Truck,
     title: "Vehicle Towing",
     tagline: "Cars, SUVs, vans, trucks — moved safely, any distance.",
@@ -38,6 +42,7 @@ const list: Service[] = [
     benefits: ["Damage-free loading", "Insured drivers", "Long-distance capable"],
   },
   {
+    slug: "heavy-equipment-transport",
     icon: Container,
     title: "Heavy Equipment Transport",
     tagline: "Excavators, loaders, forklifts — permitted and precise.",
@@ -47,6 +52,7 @@ const list: Service[] = [
     benefits: ["Lowboy trailers", "Permitted loads", "Cross-country routing"],
   },
   {
+    slug: "container-hauling",
     icon: Package,
     title: "Container Hauling",
     tagline: "20ft and 40ft containers — port to yard, yard to site.",
@@ -56,6 +62,7 @@ const list: Service[] = [
     benefits: ["Tilt & chassis units", "Port pickups", "Yard-to-yard moves"],
   },
   {
+    slug: "generator-hauling",
     icon: Zap,
     title: "Generator Hauling",
     tagline: "Industrial generators loaded, tied down, and delivered.",
@@ -65,6 +72,7 @@ const list: Service[] = [
     benefits: ["Any size", "Site delivery", "Rigging assistance"],
   },
   {
+    slug: "freight-services",
     icon: Truck,
     title: "Freight Services",
     tagline: "Time-critical freight with real communication.",
@@ -74,6 +82,7 @@ const list: Service[] = [
     benefits: ["Same-day options", "Dedicated units", "Real-time updates"],
   },
   {
+    slug: "vehicle-recovery",
     icon: Wrench,
     title: "Vehicle Recovery",
     tagline: "Ditch, rollover, and stuck-vehicle recovery.",
@@ -83,6 +92,7 @@ const list: Service[] = [
     benefits: ["Winch & rigging expertise", "Rotator support", "Off-road capable"],
   },
   {
+    slug: "flood-recovery",
     icon: Waves,
     title: "Flood Recovery",
     tagline: "Rapid response to water-damaged vehicles.",
@@ -92,6 +102,7 @@ const list: Service[] = [
     benefits: ["24/7 emergency crews", "Salvage handling", "Insurance-friendly"],
   },
   {
+    slug: "roadside-assistance",
     icon: BatteryCharging,
     title: "Roadside Assistance",
     tagline: "Jump-starts, tire changes, lockouts, fuel delivery.",
@@ -101,6 +112,7 @@ const list: Service[] = [
     benefits: ["Fast ETAs", "Fully equipped trucks", "Fair flat rates"],
   },
   {
+    slug: "commercial-fleet-support",
     icon: Building2,
     title: "Commercial Fleet Support",
     tagline: "Priority dispatch and account management for fleets.",
@@ -110,6 +122,7 @@ const list: Service[] = [
     benefits: ["Priority response", "Consolidated billing", "Custom SLAs"],
   },
   {
+    slug: "winch-out-off-road",
     icon: Anchor,
     title: "Winch-Out & Off-Road Recovery",
     tagline: "Bogged, ditched, or stuck off-road — winched out.",
@@ -121,6 +134,12 @@ const list: Service[] = [
 ];
 
 function Services() {
+  const [covers, setCovers] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    getServiceCovers().then(setCovers).catch(() => {});
+  }, []);
+
   return (
     <>
       <section className="pt-40 pb-16 border-b border-border">
@@ -145,9 +164,21 @@ function Services() {
           {list.map((s, i) => (
             <article
               key={s.title}
-              id={s.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}
-              className="group border border-border bg-surface hover:border-primary transition-all"
+              id={s.slug}
+              className="group border border-border bg-surface hover:border-primary transition-all overflow-hidden"
             >
+              {/* Cover image — shown only if one is set */}
+              {covers[s.slug] && (
+                <div className="w-full aspect-[21/6] overflow-hidden relative">
+                  <img
+                    src={covers[s.slug]}
+                    alt={s.title}
+                    className="absolute inset-0 h-full w-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent" />
+                </div>
+              )}
+
               <div className="grid md:grid-cols-[auto_1fr] gap-8 p-8">
                 {/* Left: number + icon */}
                 <div className="flex md:flex-col items-center md:items-start gap-6 md:gap-4">

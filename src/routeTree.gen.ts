@@ -21,6 +21,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SitemapXmlRouteImport } from './routes/sitemap.xml'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
+import { Route as GarageDispatchServicesRouteImport } from './routes/garage-dispatch.services'
 import { Route as GarageDispatchReviewsRouteImport } from './routes/garage-dispatch.reviews'
 import { Route as GarageDispatchNewsRouteImport } from './routes/garage-dispatch.news'
 import { Route as GarageDispatchLoginRouteImport } from './routes/garage-dispatch.login'
@@ -86,6 +87,11 @@ const NewsSlugRoute = NewsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => NewsRoute,
 } as any)
+const GarageDispatchServicesRoute = GarageDispatchServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => GarageDispatchRoute,
+} as any)
 const GarageDispatchReviewsRoute = GarageDispatchReviewsRouteImport.update({
   id: '/reviews',
   path: '/reviews',
@@ -122,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/garage-dispatch/login': typeof GarageDispatchLoginRoute
   '/garage-dispatch/news': typeof GarageDispatchNewsRoute
   '/garage-dispatch/reviews': typeof GarageDispatchReviewsRoute
+  '/garage-dispatch/services': typeof GarageDispatchServicesRoute
   '/news/$slug': typeof NewsSlugRoute
   '/sitemap/xml': typeof SitemapXmlRoute
 }
@@ -140,6 +147,7 @@ export interface FileRoutesByTo {
   '/garage-dispatch/login': typeof GarageDispatchLoginRoute
   '/garage-dispatch/news': typeof GarageDispatchNewsRoute
   '/garage-dispatch/reviews': typeof GarageDispatchReviewsRoute
+  '/garage-dispatch/services': typeof GarageDispatchServicesRoute
   '/news/$slug': typeof NewsSlugRoute
   '/sitemap/xml': typeof SitemapXmlRoute
 }
@@ -159,6 +167,7 @@ export interface FileRoutesById {
   '/garage-dispatch/login': typeof GarageDispatchLoginRoute
   '/garage-dispatch/news': typeof GarageDispatchNewsRoute
   '/garage-dispatch/reviews': typeof GarageDispatchReviewsRoute
+  '/garage-dispatch/services': typeof GarageDispatchServicesRoute
   '/news/$slug': typeof NewsSlugRoute
   '/sitemap/xml': typeof SitemapXmlRoute
 }
@@ -179,6 +188,7 @@ export interface FileRouteTypes {
     | '/garage-dispatch/login'
     | '/garage-dispatch/news'
     | '/garage-dispatch/reviews'
+    | '/garage-dispatch/services'
     | '/news/$slug'
     | '/sitemap/xml'
   fileRoutesByTo: FileRoutesByTo
@@ -197,6 +207,7 @@ export interface FileRouteTypes {
     | '/garage-dispatch/login'
     | '/garage-dispatch/news'
     | '/garage-dispatch/reviews'
+    | '/garage-dispatch/services'
     | '/news/$slug'
     | '/sitemap/xml'
   id:
@@ -215,6 +226,7 @@ export interface FileRouteTypes {
     | '/garage-dispatch/login'
     | '/garage-dispatch/news'
     | '/garage-dispatch/reviews'
+    | '/garage-dispatch/services'
     | '/news/$slug'
     | '/sitemap/xml'
   fileRoutesById: FileRoutesById
@@ -319,6 +331,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsSlugRouteImport
       parentRoute: typeof NewsRoute
     }
+    '/garage-dispatch/services': {
+      id: '/garage-dispatch/services'
+      path: '/services'
+      fullPath: '/garage-dispatch/services'
+      preLoaderRoute: typeof GarageDispatchServicesRouteImport
+      parentRoute: typeof GarageDispatchRoute
+    }
     '/garage-dispatch/reviews': {
       id: '/garage-dispatch/reviews'
       path: '/reviews'
@@ -355,6 +374,7 @@ interface GarageDispatchRouteChildren {
   GarageDispatchLoginRoute: typeof GarageDispatchLoginRoute
   GarageDispatchNewsRoute: typeof GarageDispatchNewsRoute
   GarageDispatchReviewsRoute: typeof GarageDispatchReviewsRoute
+  GarageDispatchServicesRoute: typeof GarageDispatchServicesRoute
 }
 
 const GarageDispatchRouteChildren: GarageDispatchRouteChildren = {
@@ -362,6 +382,7 @@ const GarageDispatchRouteChildren: GarageDispatchRouteChildren = {
   GarageDispatchLoginRoute: GarageDispatchLoginRoute,
   GarageDispatchNewsRoute: GarageDispatchNewsRoute,
   GarageDispatchReviewsRoute: GarageDispatchReviewsRoute,
+  GarageDispatchServicesRoute: GarageDispatchServicesRoute,
 }
 
 const GarageDispatchRouteWithChildren = GarageDispatchRoute._addFileChildren(
@@ -394,3 +415,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
