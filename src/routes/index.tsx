@@ -147,18 +147,6 @@ function Home() {
               </a>
             </div>
 
-            <div className="mt-14 grid grid-cols-3 gap-6 max-w-lg">
-              {[
-                { k: "24/7", v: "Dispatch" },
-                { k: "15+", v: "Years Experience" },
-                { k: "5k+", v: "Jobs Completed" },
-              ].map((s) => (
-                <div key={s.v} className="border-l-2 border-primary pl-4">
-                  <div className="font-display text-3xl text-foreground">{s.k}</div>
-                  <div className="text-xs uppercase tracking-widest text-muted-foreground">{s.v}</div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
 

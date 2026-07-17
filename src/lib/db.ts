@@ -62,6 +62,23 @@ export async function ensureSchema() {
   await sql`CREATE INDEX IF NOT EXISTS idx_gallery_landing ON gallery_items(on_landing)`;
   await sql`CREATE INDEX IF NOT EXISTS idx_gallery_order ON gallery_items(display_order)`;
 
+  // News / blog posts
+  await sql`
+    CREATE TABLE IF NOT EXISTS news_posts (
+      id           SERIAL PRIMARY KEY,
+      title        VARCHAR(200) NOT NULL,
+      slug         VARCHAR(220) UNIQUE NOT NULL,
+      excerpt      VARCHAR(400),
+      body         TEXT NOT NULL,
+      cover_url    TEXT,
+      category     VARCHAR(80) NOT NULL DEFAULT 'News',
+      published    BOOLEAN NOT NULL DEFAULT TRUE,
+      created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      published_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS idx_news_published ON news_posts(published, published_at DESC)`;
+
   // Seed the default admin user if none exists
   // Password: Dispatch@CAAS#2026!  (SHA-256 of password + SESSION_SECRET)
   await sql`
