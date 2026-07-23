@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
 const getSitemap = createServerFn({ method: "GET" }).handler(async () => {
-  const base = "https://caastowing.com";
+  const base = "https://www.caastowing.com";
   const now = new Date().toISOString().split("T")[0];
 
   const urls = [

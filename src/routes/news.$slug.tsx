@@ -18,8 +18,8 @@ export const Route = createFileRoute("/news/$slug")({
       };
     }
     const p = loaderData.post;
-    const url = `https://caastowing.com/news/${p.slug}`;
-    const img = p.cover_url || "https://caastowing.com/og-image.jpg";
+    const url = `https://www.caastowing.com/news/${p.slug}`;
+    const img = p.cover_url || "https://www.caastowing.com/og-image.jpg";
     return {
       meta: [
         { title: `${p.title} — CAAS Towing & Recovery` },

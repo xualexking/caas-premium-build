@@ -9,9 +9,9 @@ export const Route = createFileRoute("/drivers")({
       { name: "robots", content: "noindex, follow" },
       { property: "og:title", content: "Partner Drivers — CAAS Towing & Recovery" },
       { property: "og:description", content: "Partner drivers program coming soon." },
-      { property: "og:url", content: "https://caastowing.com/drivers" },
+      { property: "og:url", content: "https://www.caastowing.com/drivers" },
     ],
-    links: [{ rel: "canonical", href: "https://caastowing.com/drivers" }],
+    links: [{ rel: "canonical", href: "https://www.caastowing.com/drivers" }],
   }),
   component: Drivers,
 });
